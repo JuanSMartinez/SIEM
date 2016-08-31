@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/Scenes/Manejo_Clavicula.unity
+  isLoaded: 1
+  isActive: 1
