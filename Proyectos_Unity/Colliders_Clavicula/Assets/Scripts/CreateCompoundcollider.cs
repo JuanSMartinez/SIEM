@@ -9,15 +9,15 @@ public class CreateCompoundcollider : MonoBehaviour {
     void Start() {
 
         MeshRenderer clavicle_renderer = gameObject.GetComponentInChildren<MeshRenderer>();
+		//MeshRenderer clavicle_renderer = gameObject.GetComponent<MeshRenderer>();
         Bounds bounds = clavicle_renderer.bounds;
+		Transform clavicleTransform = gameObject.GetComponentsInChildren<Transform>()[0];
           
         GameObject hugeCylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+		scaleCylinder(hugeCylinder, bounds.size);
         positionCylinder(hugeCylinder, bounds.size);
-        scaleCylinder(hugeCylinder, bounds.size);
-       
-        hugeCylinder.transform.SetParent(gameObject.transform);
-        
-
+		translateCylinder (hugeCylinder, gameObject.transform);
+		hugeCylinder.transform.SetParent(gameObject.transform);
     }
 
    
@@ -25,6 +25,15 @@ public class CreateCompoundcollider : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 	
+	}
+
+	void translateCylinder(GameObject cylinder, Transform parentPosition){
+		Debug.Log (parentPosition.position);
+		Debug.Log (cylinder.transform.position);
+		cylinder.transform.Translate (parentPosition.position, Space.World);
+		//cylinder.transform.Translate (parentPosition.position, Space.Self);
+		Debug.Log (cylinder.transform.position);
+
 	}
 
     void scaleCylinder(GameObject cylinder, Vector3 parentSize)
@@ -75,7 +84,7 @@ public class CreateCompoundcollider : MonoBehaviour {
                 angles = new Vector3(0, 0, 0);
                 break;
         }
-        cylinder.transform.eulerAngles = angles;
+		cylinder.transform.Rotate (angles);
     }
 
     int getBiggestAxis(Vector3 size)
@@ -91,6 +100,73 @@ public class CreateCompoundcollider : MonoBehaviour {
         else
             return 2;
 
-
     }
+
+	GameObject getCuttingPlane(){
+		
+		//Get the object's bounds
+		Bounds bounds = gameObject.GetComponentInChildren<MeshRenderer>().bounds;
+
+		//Create the cut plane
+		GameObject cutPlane = GameObject.CreatePrimitive (PrimitiveType.Plane);
+
+		//Scale the plane
+		scaleToBounds(cutPlane, bounds);
+
+		//Rotate the plane
+
+		return null;
+
+	}
+
+	void scaleToBounds(GameObject plane, Bounds bounds){
+		//Size of the bounding box
+		Vector3 size = bounds.size;
+
+		//Get the sorted indices
+		int[] sortedIndices = sortAxis(size);
+		Vector3 scale = new Vector3();
+
+		//Get lowest dimensions
+		int middleIndex = sortedIndices [1];
+		int lowestIndex = sortedIndices [2];
+
+		//Scale vector
+		float[] sizes = new float[]{ size.x, size.y, size.z };
+		scale = new Vector3 (sizes [middleIndex], 0, sizes [lowestIndex]);
+
+		//Scale the plane where  x >= z 
+		plane.transform.localScale = scale;
+	}
+
+	void rotatePlane(){
+
+	}
+
+	int[] sortAxis(Vector3 size){
+
+		float parentX = size.x;
+		float parentY = size.y;
+		float parentZ = size.z;
+		float[] coords = { parentX, parentY, parentZ };
+		int[] indices = new int[3];
+		for(int i = 0; i < coords.Length-1; i++)
+		{
+			float max = coords[i];
+			int index = i;
+			for(int j = i+1 ; j <coords.Length; j++)
+			{
+				if(coords[j] > max)
+				{
+					max = coords[j];
+					index = j;
+				}
+			}
+			float temp = coords[i];
+			coords[i] = max;
+			coords[index] = temp;
+			indices [i] = index;
+		}
+		return indices;
+	}
 }
