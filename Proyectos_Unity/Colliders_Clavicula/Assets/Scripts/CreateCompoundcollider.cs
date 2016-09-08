@@ -111,7 +111,7 @@ public class CreateCompoundcollider : MonoBehaviour {
 		GameObject cutPlane = GameObject.CreatePrimitive (PrimitiveType.Plane);
 
 		//Rotate the plane
-		rotatePlane(cutPlane, bounds);
+		orientPlane(cutPlane, bounds);
 	
 		//Scale the plane
 		scaleToBounds(cutPlane, bounds);
@@ -142,15 +142,29 @@ public class CreateCompoundcollider : MonoBehaviour {
 		plane.transform.localScale = scale;
 	}
 
-	void rotatePlane(GameObject plane, Bounds bounds){
+	void orientPlane(GameObject plane, Bounds bounds){
 
 		//Biggest axis
 		int biggestAxis = getBiggestAxis(bounds.size);
 
-		//If Y is not the biggest axis, rotate around X or Z
+		//Sorted axis
+		int[] sortedIndices = sortAxis(bounds.size);
+
+		//Get lowest dimensions
+		int middleIndex = sortedIndices [1];
+		int lowestIndex = sortedIndices [2];
+
+		Vector3 scale = new Vector3();
+
+		//If Y is not the biggest axis, rotate around X or Z and scale
 		if (biggestAxis != 1) {
 			Vector3 rotation = biggestAxis == 0 ? new Vector3 (0, 0, 90) : new Vector3(90,0,0);
 			plane.transform.Rotate (rotation);
+
+			if (middleIndex == 1) {
+
+			}
+
 		}
 	}
 
