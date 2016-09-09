@@ -11,6 +11,7 @@ public class HapticInjection : HapticClassScript {
 	private GenericFunctionsClass myGenericFunctionsClassScript;
 
 	private float myDopLimit;
+    private Boolean manipulation = false;
 	
 	/*****************************************************************************/
 	
@@ -25,6 +26,7 @@ public class HapticInjection : HapticClassScript {
 
 		if(PluginImport.InitHapticDevice())
 		{
+
 			Debug.Log("OpenGL Context Launched");
 			Debug.Log("Haptic Device Launched");
 			
@@ -40,8 +42,9 @@ public class HapticInjection : HapticClassScript {
 			 * Mode = 1 Manipulation - So objects will have a mass when handling them
 			 * Mode = 2 Custom Effect - So the haptic device simulate vibration and tangential forces as power tools
 			 * Mode = 3 Puncture - So the haptic device is a needle that puncture inside a geometry
+             * Default = 3
 			 */
-			PluginImport.SetMode(ModeIndex);
+			PluginImport.SetMode(3);
 			//Show a text descrition of the mode
 			myGenericFunctionsClassScript.IndicateMode();
 				
@@ -102,10 +105,18 @@ public class HapticInjection : HapticClassScript {
 		//Haptic Rendering Loop
 		/***************************************************************/
 		PluginImport.RenderHaptic ();
+        if (PluginImport.GetButton2State())
+            manipulation = !manipulation;
+
+        if (manipulation)
+            PluginImport.SetMode(1);
+        else
+            PluginImport.SetMode(3);
+
+        Debug.Log(manipulation);
+        myGenericFunctionsClassScript.GetProxyValues();
 		
-		myGenericFunctionsClassScript.GetProxyValues();
-		
-		myGenericFunctionsClassScript.GetTouchedObject();
+		myGenericFunctionsClassScript.GetTouchedObject(); 
 
 		//For the Puncture Mode effect
 		if(PluginImport.GetMode() == 3)
