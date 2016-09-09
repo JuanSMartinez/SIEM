@@ -11,7 +11,6 @@ public class HapticInjection : HapticClassScript {
 	private GenericFunctionsClass myGenericFunctionsClassScript;
 
 	private float myDopLimit;
-    private Boolean manipulation = false;
 	
 	/*****************************************************************************/
 	
@@ -44,7 +43,7 @@ public class HapticInjection : HapticClassScript {
 			 * Mode = 3 Puncture - So the haptic device is a needle that puncture inside a geometry
              * Default = 3
 			 */
-			PluginImport.SetMode(3);
+			PluginImport.SetMode(1);
 			//Show a text descrition of the mode
 			myGenericFunctionsClassScript.IndicateMode();
 				
@@ -72,7 +71,8 @@ public class HapticInjection : HapticClassScript {
 		/***************************************************************/
 
 			// Constant Force Example - We use this environmental force effect to simulate the weight of the cursor
-			//myGenericFunctionsClassScript.SetEnvironmentConstantForce();
+		myGenericFunctionsClassScript.SetEnvironmentConstantForce();
+        myGenericFunctionsClassScript.SetEnvironmentViscosity();
 			
 		/***************************************************************/
 		//Setup the Haptic Geometry in the OpenGL context
@@ -105,18 +105,10 @@ public class HapticInjection : HapticClassScript {
 		//Haptic Rendering Loop
 		/***************************************************************/
 		PluginImport.RenderHaptic ();
-        if (PluginImport.GetButton2State())
-            manipulation = !manipulation;
-
-        if (manipulation)
-            PluginImport.SetMode(1);
-        else
-            PluginImport.SetMode(3);
-
-        Debug.Log(manipulation);
+        
         myGenericFunctionsClassScript.GetProxyValues();
-		
-		myGenericFunctionsClassScript.GetTouchedObject(); 
+
+        myGenericFunctionsClassScript.GetTouchedObject(); 
 
 		//For the Puncture Mode effect
 		if(PluginImport.GetMode() == 3)
