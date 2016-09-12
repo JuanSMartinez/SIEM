@@ -25,7 +25,6 @@ public class HapticInjection : HapticClassScript {
 
 		if(PluginImport.InitHapticDevice())
 		{
-
 			Debug.Log("OpenGL Context Launched");
 			Debug.Log("Haptic Device Launched");
 			
@@ -41,9 +40,8 @@ public class HapticInjection : HapticClassScript {
 			 * Mode = 1 Manipulation - So objects will have a mass when handling them
 			 * Mode = 2 Custom Effect - So the haptic device simulate vibration and tangential forces as power tools
 			 * Mode = 3 Puncture - So the haptic device is a needle that puncture inside a geometry
-             * Default = 3
 			 */
-			PluginImport.SetMode(1);
+			PluginImport.SetMode(ModeIndex);
 			//Show a text descrition of the mode
 			myGenericFunctionsClassScript.IndicateMode();
 				
@@ -71,8 +69,7 @@ public class HapticInjection : HapticClassScript {
 		/***************************************************************/
 
 			// Constant Force Example - We use this environmental force effect to simulate the weight of the cursor
-		myGenericFunctionsClassScript.SetEnvironmentConstantForce();
-        myGenericFunctionsClassScript.SetEnvironmentViscosity();
+			//myGenericFunctionsClassScript.SetEnvironmentConstantForce();
 			
 		/***************************************************************/
 		//Setup the Haptic Geometry in the OpenGL context
@@ -105,10 +102,10 @@ public class HapticInjection : HapticClassScript {
 		//Haptic Rendering Loop
 		/***************************************************************/
 		PluginImport.RenderHaptic ();
-        
-        myGenericFunctionsClassScript.GetProxyValues();
-
-        myGenericFunctionsClassScript.GetTouchedObject(); 
+		
+		myGenericFunctionsClassScript.GetProxyValues();
+		
+		myGenericFunctionsClassScript.GetTouchedObject();
 
 		//For the Puncture Mode effect
 		if(PluginImport.GetMode() == 3)
@@ -120,8 +117,8 @@ public class HapticInjection : HapticClassScript {
 			myScp = ConverterClass.ConvertIntPtrToDouble3(PluginImport.GetFirstScpPt());
 			//Debug.Log (" SCP " + myScp[0] + " " + myScp[1] + " " + myScp[2]);
 
-			Vector3 posInjectionHole;
-			posInjectionHole = ConverterClass.ConvertDouble3ToVector3(myScp);
+			//Vector3 posInjectionHole;
+			//posInjectionHole = ConverterClass.ConvertDouble3ToVector3(myScp);
 			//GameObject.Find ("InjectionMarker").transform.position = posInjectionHole;
 
 			/*double[] myProx = new double[3];

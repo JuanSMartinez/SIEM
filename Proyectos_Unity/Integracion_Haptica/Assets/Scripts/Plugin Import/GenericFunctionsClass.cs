@@ -67,6 +67,8 @@ public class GenericFunctionsClass : MonoBehaviour {
 			myHapticClassScript.HapticMode = "Custom Effect";
 		else if(PluginImport.GetMode () == 3)
 			myHapticClassScript.HapticMode = "Puncture";
+
+        Debug.Log("Mode: " + PluginImport.GetMode());
 	}
 	
 
@@ -186,7 +188,7 @@ public class GenericFunctionsClass : MonoBehaviour {
 		string myObjStringName = ConverterClass.ConvertIntPtrToByteToString(PluginImport.GetTouchedObjectName());
 		Debug.Log ("The touched object is " + myObjStringName);
 		
-		//If in Manipulation Mode enable the manipulation of the selected object
+		//If in Manipulation Mode enable themanipulation of the selected object
 		if(PluginImport.GetMode() == 1)
 		{
 			if(PluginImport.GetButton1State())

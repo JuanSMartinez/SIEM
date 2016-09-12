@@ -4,8 +4,9 @@ using System.Collections;
 public class HapticClassScript : MonoBehaviour {
 
 	public string HapticMode;
+    public int ModeIndex;
 
-	public string TouchableFace;
+    public string TouchableFace;
 
 	public GameObject myHapticCamera;
 	public GameObject workSpaceObj;
