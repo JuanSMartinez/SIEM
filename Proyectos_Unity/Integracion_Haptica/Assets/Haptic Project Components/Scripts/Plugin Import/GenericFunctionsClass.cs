@@ -184,7 +184,7 @@ public class GenericFunctionsClass : MonoBehaviour {
 	{
 		//Convert Convert IntPtr To byte[] to String
 		string myObjStringName = ConverterClass.ConvertIntPtrToByteToString(PluginImport.GetTouchedObjectName());
-		//Debug.Log ("The touched object is " + myObjStringName.ToString());
+		Debug.Log ("The touched object is " + myObjStringName.ToString());
 		
 		//If in Manipulation Mode enable the manipulation of the selected object
 		if(PluginImport.GetMode() == 1)
@@ -236,8 +236,8 @@ public class GenericFunctionsClass : MonoBehaviour {
 	{
 		//Get array of all object with tag "Touchable"
 		GameObject[] myObjects = GameObject.FindGameObjectsWithTag("Touchable") as GameObject[];
-		
-		for (int ObjId = 0; ObjId < myObjects.Length; ObjId++)
+
+        for (int ObjId = 0; ObjId < myObjects.Length; ObjId++)
 		{
 			/***************************************************************/
 			//Set the Transformation Matric of the Object
@@ -347,8 +347,8 @@ public class GenericFunctionsClass : MonoBehaviour {
 	{
 		//Get array of all object with tag "Touchable"
 		GameObject[] myObjects = GameObject.FindGameObjectsWithTag("Touchable") as GameObject[];
-		
-		for (int ObjId = 0; ObjId < myObjects.Length; ObjId++)
+
+        for (int ObjId = 0; ObjId < myObjects.Length; ObjId++)
 		{
 			/***************************************************************/
 			//Set the Transformation Matric of the Object

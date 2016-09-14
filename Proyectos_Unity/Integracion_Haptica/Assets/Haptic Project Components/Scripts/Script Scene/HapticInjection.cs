@@ -24,8 +24,9 @@ public class HapticInjection : HapticClassScript {
 
 	void Start()
 	{
+        
 
-		if(PluginImport.InitHapticDevice())
+        if (PluginImport.InitHapticDevice())
 		{
 			Debug.Log("OpenGL Context Launched");
 			Debug.Log("Haptic Device Launched");
