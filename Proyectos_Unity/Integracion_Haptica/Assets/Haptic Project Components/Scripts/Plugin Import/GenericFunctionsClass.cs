@@ -184,7 +184,7 @@ public class GenericFunctionsClass : MonoBehaviour {
 	{
 		//Convert Convert IntPtr To byte[] to String
 		string myObjStringName = ConverterClass.ConvertIntPtrToByteToString(PluginImport.GetTouchedObjectName());
-		Debug.Log ("The touched object is " + myObjStringName.ToString());
+		//Debug.Log ("The touched object is " + myObjStringName.ToString());
 		
 		//If in Manipulation Mode enable the manipulation of the selected object
 		if(PluginImport.GetMode() == 1)

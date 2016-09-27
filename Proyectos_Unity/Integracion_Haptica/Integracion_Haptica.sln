@@ -1,7 +1,7 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integracion_Haptica.CSharp", "Integracion_Haptica.CSharp.csproj", "{304EB53E-7492-1892-ECBD-5DBEEB88BFC8}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{F222355D-528A-7FB2-7616-56D1F0277B27}") = "Integracion_Haptica", "Assembly-CSharp.csproj", "{1AFFAC46-B242-B330-3848-74DEC216078F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,12 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{304EB53E-7492-1892-ECBD-5DBEEB88BFC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{304EB53E-7492-1892-ECBD-5DBEEB88BFC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{304EB53E-7492-1892-ECBD-5DBEEB88BFC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{304EB53E-7492-1892-ECBD-5DBEEB88BFC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AFFAC46-B242-B330-3848-74DEC216078F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AFFAC46-B242-B330-3848-74DEC216078F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AFFAC46-B242-B330-3848-74DEC216078F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AFFAC46-B242-B330-3848-74DEC216078F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal
