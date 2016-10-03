@@ -5,8 +5,6 @@ using System.Runtime.InteropServices;
 
 public class ConstantForceEffect : MonoBehaviour {
 
-	public static ConstantForceEffect instance;
-
 	public string Type;
 	public int effect_index;
 	public float gain;
@@ -19,7 +17,6 @@ public class ConstantForceEffect : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		instance = this;
 		Type = "constant";
 	}
 	

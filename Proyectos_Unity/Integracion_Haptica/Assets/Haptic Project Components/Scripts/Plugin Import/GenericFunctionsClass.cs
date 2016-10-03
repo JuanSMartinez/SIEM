@@ -329,17 +329,7 @@ public class GenericFunctionsClass : MonoBehaviour {
 			PluginImport.SetHapticProperty(ObjId,ConverterClass.ConvertStringToByteToIntPtr("mass"),myHapticPropertiesScript.mass);
 			PluginImport.SetHapticProperty(ObjId,ConverterClass.ConvertStringToByteToIntPtr("fixed"),System.Convert.ToInt32(myHapticPropertiesScript.fixedObj));
 
-			/*PluginImport.SetStiffness(ObjId, myHapticPropertiesScript.stiffness);
-			PluginImport.SetDamping(ObjId, myHapticPropertiesScript.damping);
-			PluginImport.SetStaticFriction(ObjId, myHapticPropertiesScript.staticFriction);
-			PluginImport.SetDynamicFriction(ObjId, myHapticPropertiesScript.dynamicFriction);
-			PluginImport.SetTangentialStiffness(ObjId, myHapticPropertiesScript.tangentialStiffness);
-			PluginImport.SetTangentialDamping(ObjId, myHapticPropertiesScript.tangentialDamping);
-			PluginImport.SetPopThrough(ObjId, myHapticPropertiesScript.popThrough);
-			PluginImport.SetPuncturedStaticFriction(ObjId, myHapticPropertiesScript.puncturedStaticFriction);
-			PluginImport.SetPuncturedDynamicFriction(ObjId, myHapticPropertiesScript.puncturedDynamicFriction);
-			PluginImport.SetMass(ObjId,myHapticPropertiesScript.mass);
-			PluginImport.SetFixed(ObjId,myHapticPropertiesScript.fixedObj);	*/
+
 		}
 	}
 
@@ -414,7 +404,7 @@ public class GenericFunctionsClass : MonoBehaviour {
 		
 		//Set the effect
 		PluginImport.SetEffect(type,myContantForceScript.effect_index, myContantForceScript.gain, myContantForceScript.magnitude, myContantForceScript.duration, myContantForceScript.frequency, position, direction);
-		PluginImport.StartEffect(myContantForceScript.effect_index);
+		PluginImport.StartEffect (myContantForceScript.effect_index);
 	}
 	
 	public void SetEnvironmentFriction()
@@ -512,6 +502,12 @@ public class GenericFunctionsClass : MonoBehaviour {
 		//Set the effect
 		PluginImport.SetEffect(type,myTangentialForceScript.effect_index, myTangentialForceScript.gain, myTangentialForceScript.magnitude, myTangentialForceScript.duration, myTangentialForceScript.frequency, position, direction);
 		PluginImport.StartEffect(myTangentialForceScript.effect_index);
+	}
+
+	public void StopEnvironmentConstantForce(){
+		myContantForceScript = transform.GetComponent<ConstantForceEffect>();
+		PluginImport.StopEffect (myContantForceScript.effect_index);
+
 	}
 	/******************************************************************************************************************************************************************/
 }
