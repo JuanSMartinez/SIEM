@@ -38,6 +38,11 @@ public class GenericFunctionsClass : MonoBehaviour {
 	private VibrationMotor myVibrationMotorScript;
 	private VibrationContact myVibrationContactScript;
 	private TangentialForce myTangentialForceScript;
+
+	//Manipulated object variables
+	private int clickCount = 0;
+	private GameObject manipObj = null;
+	private Transform prevParent;
 	
 	/*************************************************************/
 	
@@ -176,9 +181,7 @@ public class GenericFunctionsClass : MonoBehaviour {
 	}
 
 	
-	private int clickCount = 0;
-	private GameObject manipObj = null;
-	private Transform prevParent;
+
 	
 	public void GetTouchedObject()
 	{
@@ -507,6 +510,53 @@ public class GenericFunctionsClass : MonoBehaviour {
 	public void StopEnvironmentConstantForce(){
 		myContantForceScript = transform.GetComponent<ConstantForceEffect>();
 		PluginImport.StopEffect (myContantForceScript.effect_index);
+
+	}
+
+	public void manipulateObject(){
+		//Convert Convert IntPtr To byte[] to String
+		string myObjStringName = ConverterClass.ConvertIntPtrToByteToString(PluginImport.GetTouchedObjectName());
+
+		//If in Manipulation Mode enable the manipulation of the selected object
+
+		if(PluginImport.GetButton1State())
+		{
+			if(clickCount == 0)
+			{
+				//Set the manipulated object at first click
+				manipObj = GameObject.Find (myObjStringName);
+
+				//Setup Manipulated object Hierarchy as a child of haptic cursor - Only if object is declared as Manipulable object
+				if(manipObj != null && !PluginImport.IsFixed(PluginImport.GetManipulatedObjectId()))
+				{
+					//Store the Previous parent object	
+					prevParent = manipObj.transform.parent.parent;
+
+					//Asign New Parent - the tip of the manipulation object device
+					manipObj.transform.parent.parent = myHapticClassScript.hapticCursor.transform;
+				}
+
+			}
+			clickCount++;
+		}
+		else 
+		{
+			//Reset Click counter
+			clickCount = 0;
+
+			//Reset Manipulated Object Hierarchy
+			if (manipObj != null)
+				manipObj.transform.parent.parent = prevParent;
+
+			//Reset Manipulated Object
+			manipObj = null;
+
+			//Reset prevParent
+			prevParent = null;
+		}
+
+		//Only in Manipulation otherwise object are not moving so there is no need to proceed
+		UpdateHapticObjectMatrixTransform();
 
 	}
 	/******************************************************************************************************************************************************************/
