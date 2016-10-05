@@ -43,7 +43,7 @@ public class GenericFunctionsClass : MonoBehaviour {
 	private int clickCount = 0;
 	private GameObject manipObj = null;
 	private Transform prevParent;
-	private Vector3 prevAnchor;
+
 	
 	/*************************************************************/
 	
@@ -514,6 +514,16 @@ public class GenericFunctionsClass : MonoBehaviour {
 
 	}
 
+	public void stopEnvironmentSpringForce(){
+		mySpringScript = transform.GetComponent<SpringEffect> ();
+		PluginImport.StopEffect (mySpringScript.effect_index);
+	}
+
+	public void stopEnvironmentFriction(){
+		myFrictionScript = transform.GetComponent<FrictionEffect> ();
+		PluginImport.StopEffect (myFrictionScript.effect_index);
+	}
+
 	public void manipulateObject(){
 		//Convert Convert IntPtr To byte[] to String
 		string myObjStringName = ConverterClass.ConvertIntPtrToByteToString(PluginImport.GetTouchedObjectName());
@@ -532,10 +542,10 @@ public class GenericFunctionsClass : MonoBehaviour {
 				{
 					//Store the Previous parent object	
 					prevParent = manipObj.transform.parent.parent;
-					prevAnchor = manipObj.transform.parent.GetComponent<ConfigurableJoint> ().anchor;
+
 					//Asign New Parent - the tip of the manipulation object device
 					manipObj.transform.parent.parent = myHapticClassScript.hapticCursor.transform;
-					manipObj.transform.parent.GetComponent<ConfigurableJoint> ().anchor = myHapticClassScript.hapticCursor.transform.forward;
+
 				}
 
 			}
@@ -549,7 +559,7 @@ public class GenericFunctionsClass : MonoBehaviour {
 			//Reset Manipulated Object Hierarchy
 			if (manipObj != null) {
 				manipObj.transform.parent.parent = prevParent;
-				manipObj.transform.parent.GetComponent<ConfigurableJoint> ().anchor = prevAnchor;
+
 			}
 
 			//Reset Manipulated Object
@@ -557,7 +567,7 @@ public class GenericFunctionsClass : MonoBehaviour {
 
 			//Reset prevParent
 			prevParent = null;
-			prevAnchor = new Vector3();
+
 		}
 
 		//Only in Manipulation otherwise object are not moving so there is no need to proceed
