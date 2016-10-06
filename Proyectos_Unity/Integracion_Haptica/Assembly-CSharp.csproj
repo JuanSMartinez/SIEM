@@ -57,9 +57,9 @@
      <Compile Include="Assets\Haptic Project Components\Scripts\Plugin Import\GenericFunctionsClass.cs" />
      <Compile Include="Assets\Haptic Project Components\Scripts\Plugin Import\PluginImport.cs" />
      <Compile Include="Assets\Haptic Project Components\Scripts\Script Scene\CustomForceEffect.cs" />
+     <Compile Include="Assets\Haptic Project Components\Scripts\Script Scene\ForceManager.cs" />
      <Compile Include="Assets\Haptic Project Components\Scripts\Script Scene\HapticClassScript.cs" />
      <Compile Include="Assets\Haptic Project Components\Scripts\Script Scene\HapticInjection.cs" />
-     <Compile Include="Assets\Haptic Project Components\Scripts\Script Scene\NameReplacement.cs" />
      <Compile Include="Assets\Haptic Project Components\Scripts\Script Scene\ReducionTraining.cs" />
      <None Include="Assets\Haptic Project Components\Verison Changes.txt" />
      <None Include="Assets\Haptic Project Components\Standard Assets\Skyboxes\_skybox info.txt" />
