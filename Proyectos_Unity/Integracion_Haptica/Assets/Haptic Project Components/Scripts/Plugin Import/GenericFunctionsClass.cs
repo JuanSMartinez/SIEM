@@ -557,7 +557,7 @@ public class GenericFunctionsClass : MonoBehaviour {
 			clickCount = 0;
 
 			//Reset Manipulated Object Hierarchy
-			if (manipObj != null) {
+			if (manipObj != null && !myObjStringName.Equals("Musculo")) {
 				manipObj.transform.parent.parent = prevParent;
 
 			}
