@@ -1,12 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Haptic Project Components\Scripts\Script Scene\ForceManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Haptic Project Components/Scripts/Script Scene/ReducionTraining.cs">
     <Files>
-      <File FileName="Assets\Haptic Project Components\Scripts\Plugin Import\GenericFunctionsClass.cs" Line="544" Column="1" />
-      <File FileName="Assets\Haptic Project Components\Scripts\Plugin Import\PluginImport.cs" Line="1" Column="1" />
-      <File FileName="Assets\Haptic Project Components\Scripts\Force Effects\SpringEffect.cs" Line="1" Column="1" />
-      <File FileName="Assets\Haptic Project Components\Scripts\Script Scene\ReducionTraining.cs" Line="217" Column="12" />
-      <File FileName="Assets\Haptic Project Components\Scripts\Script Scene\ForceManager.cs" Line="46" Column="1" />
+      <File FileName="Assets/Haptic Project Components/Scripts/Script Scene/ForceManager.cs" Line="28" Column="3" />
+      <File FileName="Assets/Haptic Project Components/Scripts/Script Scene/ReducionTraining.cs" Line="254" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

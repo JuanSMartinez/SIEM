@@ -35,8 +35,10 @@ public class CheckBounds : MonoBehaviour {
 	private void checkBounds(){
 		Vector3 actualPosition = gameObject.transform.position;
 		float diff = Mathf.Abs (Vector3.Distance (actualPosition, initial));
-		Debug.Log ("Inicial: " + initial);
-		Debug.Log ("Actual: " + actualPosition);
-		Debug.Log ("Diff: " + diff);
+		GUIText text = GameObject.Find ("Label").GetComponent<GUIText> ();
+		text.text = "Initial: " + initial +
+		"\n Actual: " + actualPosition +
+		"\n Diff: " + diff;
+		
 	}
 }

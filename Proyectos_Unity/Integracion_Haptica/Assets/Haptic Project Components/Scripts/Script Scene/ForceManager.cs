@@ -24,7 +24,7 @@ public class ForceManager : MonoBehaviour {
 	public static string VISCOSITY = "viscous";
 
 	//Start a force
-	public void SetEnvironmentForce(string nType, int index, float[] positionEffect, float[] directionEffect, float gain, float magnitude, float duration, float frequency)
+	public static void SetEnvironmentForce(string nType, int index, float[] positionEffect, float[] directionEffect, float gain, float magnitude, float duration, float frequency)
 	{
 		
 		//convert String to IntPtr
@@ -40,7 +40,7 @@ public class ForceManager : MonoBehaviour {
 	}
 
 	//Stop a force
-	public void StopEnvironmentForce(int index){
+	public static void StopEnvironmentForce(int index){
 		PluginImport.StopEffect (index);
 	}
 
