@@ -66,6 +66,7 @@
     <Compile Include="Assets\Haptic Project Components\Scripts\Force Effects\VibrationMotor.cs" />
     <Compile Include="Assets\Haptic Project Components\Scripts\Force Effects\ViscosityEffect.cs" />
     <Compile Include="Assets\Haptic Project Components\Scripts\Haptic Properties\HapticProperties.cs" />
+    <Compile Include="Assets\Haptic Project Components\Scripts\Interactions\Interaction.cs" />
     <Compile Include="Assets\Haptic Project Components\Scripts\Plugin Import\GenericFunctionsClass.cs" />
     <Compile Include="Assets\Haptic Project Components\Scripts\Plugin Import\PluginImport.cs" />
     <Compile Include="Assets\Haptic Project Components\Scripts\Script Scene\CustomForceEffect.cs" />

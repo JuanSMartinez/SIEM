@@ -23,6 +23,9 @@ public class ForceManager : MonoBehaviour {
 
 	public static string VISCOSITY = "viscous";
 
+	//Universal index counter, All indices must be generated from this value
+	private int global_index = -1;
+
 	//Start a force
 	public static void SetEnvironmentForce(string nType, int index, float[] positionEffect, float[] directionEffect, float gain, float magnitude, float duration, float frequency)
 	{
@@ -42,6 +45,12 @@ public class ForceManager : MonoBehaviour {
 	//Stop a force
 	public static void StopEnvironmentForce(int index){
 		PluginImport.StopEffect (index);
+	}
+
+	//Return next free index for a force
+	public int GetNextIndex(){
+		global_index += 1;
+		return global_index;
 	}
 
 
