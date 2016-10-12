@@ -3,9 +3,12 @@ using System.Collections;
 
 public class CheckCollision : MonoBehaviour {
 
+	private int myIndex;
+		
 	// Use this for initialization
 	void Start () {
-	
+		myIndex = StaticVariables.GetNextIndex ();
+		Debug.Log ("Indice " + gameObject.name + ": " + myIndex);
 	}
 	
 	// Update is called once per frame
