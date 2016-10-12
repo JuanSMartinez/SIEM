@@ -9,27 +9,152 @@ public class CompoundCollider : MonoBehaviour {
 	void Start () {
 
 		//Bounds
-		Bounds bounds = gameObject.GetComponent<MeshRenderer>().bounds;
+		Bounds bounds = gameObject.GetComponentInChildren<MeshRenderer>().bounds;
+		int[] sortedIndices = SortIndices (bounds.size);
+		TestCapsule (gameObject.transform, bounds, sortedIndices);
+	}
 
+	/**
+	 * Slice mesh between two planes A and B
+	 * */
+	private Mesh SliceMesh(Vector3[] verticesA, Vector3[] verticesB, Vector3[] vertices, int[] triangles, int biggestIndex){
+
+		//New Mesh
+		Mesh sliced = new Mesh();
+		Vector3[] newVertices;
+		Vector2[] newUV;
+		int[] newTriangles;
+
+		for (int i = 0; i < vertices.Length; i++) {
+			//If the vertex is inside the planes or in the volume between them, add it to the new mesh
+			if (SuperiorVertex (vertices [i], verticesA, biggestIndex) && InferiorVertex (vertices [i], verticesB, biggestIndex)) {
+
+			}
+		}
+
+		return sliced;
+	}
+
+	/**
+	 * Check if vertex is greater to a plane or inside in a certain direction
+	 * */
+	private bool SuperiorVertex(Vector3 vertex, Vector3[] planeVertices, int biggestIndex){
+		bool response = false;
+		for(int i = 0; i < planeVertices.Length && !response; i++){
+			if (vertex [biggestIndex] >= planeVertices [i] [biggestIndex])
+				response = true;
+		}
+		return response;
+	}
+
+	/**
+	 * Check if vertex is lower to a plane or inside in a certain direction
+	 * */
+	private bool InferiorVertex(Vector3 vertex, Vector3[] planeVertices, int biggestIndex){
+		bool response = false;
+		for(int i = 0; i < planeVertices.Length && !response; i++){
+			if (vertex [biggestIndex] <= planeVertices [i] [biggestIndex])
+				response = true;
+		}
+		return response;
+	}
+		
+	private void TestCapsule(Transform transform, Bounds bounds, int[] sortedIndices){
+		//Create the capsule
+		GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+		//Rotate
+		Vector3 baseRotation;
+		switch (sortedIndices [0]) {
+		case 0:
+			//El eje X es el mayor 
+			baseRotation = new Vector3(0, 0, 90);				
+			break;
+		case 1:
+			baseRotation = new Vector3(0, 0, 0);
+			break;
+		case 2:
+			baseRotation = new Vector3(90, 0, 0);
+			break;
+		default:
+			baseRotation = new Vector3(0, 0, 0);
+			break;
+		}
+		capsule.transform.Rotate (transform.eulerAngles + baseRotation);
+
+		//Position capsule in the center of the object
+		capsule.transform.position = bounds.center;
+	}
+		
+	/**
+	 * Create child capsule positioned around a mesh bounds
+	 * */
+	private void CreateChildCapsule(Bounds bounds, int[] sortedIndices){
+		//Create the capsule
+		GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+
+		//Scale to the second biggest axis and the third biggest axis
+		Vector3 scale = new Vector3(bounds.size[sortedIndices[1]], bounds.extents[sortedIndices[0]], bounds.size[sortedIndices[1]]);
+		capsule.transform.localScale = scale;
+
+		//Rotate and scale the plane 
+		Vector3 angles;
+		switch (sortedIndices [0]) {
+		case 0:
+			//El eje X es el mayor 
+			angles = new Vector3(0, 0, 90);				
+			break;
+		case 1:
+			angles = new Vector3(0, 0, 0);
+			break;
+		case 2:
+			angles = new Vector3(90, 0, 0);
+			break;
+		default:
+			angles = new Vector3(0, 0, 0);
+			break;
+		}
+		capsule.transform.Rotate (angles);
+
+		//Position capsule in the center of the object
+		capsule.transform.position = bounds.center;
 
 	}
 
 	/**
 	 * Create and center cutting plane
 	 * */
-	private GameObject SetCuttingPlane(Bounds bounds){
+	private GameObject CreateCuttingPlane(Bounds bounds, int[] sortedIndices){
 
 		//Create the plane
 		GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
 
-		//Sort bounds size indices
-		int[] sortedIndices = SortIndices(bounds.size);
+		//Rotate and scale the plane 
+		Vector3 angles;
+		switch (sortedIndices [0]) {
+		case 0:
+			//El eje X es el mayor 
+			angles = new Vector3(0, 0, 90);				
+			break;
+		case 1:
+			angles = new Vector3(0, 0, 0);
+			break;
+		case 2:
+			angles = new Vector3(90, 0, 0);
+			break;
+		default:
+			angles = new Vector3(0, 0, 0);
+			break;
+		}
+		plane.transform.Rotate (angles);
 
-		//Set X as the biggest axis of the plane and Z as the smallest
-		Vector3 scale = new Vector3(bounds.size[sortedIndices[1]], 1, bounds.size[sortedIndices[2]]);
-		plane.transform.lossyScale = scale;
+		//Scale to the second biggest axis
+		Vector3 scale = new Vector3(bounds.extents[sortedIndices[1]], 1, bounds.extents[sortedIndices[1]]);
+		plane.transform.localScale = scale;
 
-		//Rotate the plane 
+		//Position plane in the center of the object
+		plane.transform.position = bounds.center;
+
+		return plane;
 
 	}
 
