@@ -1,17 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System;
 public class CompoundCollider : MonoBehaviour {
 
-	public int n = 100;
+	public int n = 5;
 
 	// Use this for initialization
 	void Start () {
 
 		//Bounds
 		Bounds bounds = gameObject.GetComponentInChildren<MeshRenderer>().bounds;
+
+		//Vertices and triangles
+		Vector3[] vertices = gameObject.GetComponentInChildren<MeshFilter>().mesh.vertices;
+		int[] triangles = gameObject.GetComponentInChildren<MeshFilter>().mesh.triangles;
+
+		//Sorted indices from bounds
 		int[] sortedIndices = SortIndices (bounds.size);
-		TestCapsule (gameObject.transform, bounds, sortedIndices);
+
+		float step = (bounds.size [sortedIndices [0]] / n);
+		for (int i = 0; i < n-1; i++) {
+			//Get planes A and B with A < B along the biggest axis
+			GameObject planeA = CreateCuttingPlane(bounds, sortedIndices, i * step);
+			GameObject planeB = CreateCuttingPlane(bounds, sortedIndices, (i+1) * step);
+			Vector3[] verticesA = planeA.GetComponent<MeshFilter> ().mesh.vertices;
+			Vector3[] verticesB = planeB.GetComponent<MeshFilter> ().mesh.vertices;
+			Mesh cut = SliceMesh (verticesA, verticesB, vertices, triangles, sortedIndices [0]);
+			int[] meshSortedIndices = SortIndices (cut.bounds.size);
+			CreateChildCapsule (cut.bounds, meshSortedIndices);
+		}
+
 	}
 
 	/**
@@ -21,18 +39,46 @@ public class CompoundCollider : MonoBehaviour {
 
 		//New Mesh
 		Mesh sliced = new Mesh();
-		Vector3[] newVertices;
-		Vector2[] newUV;
-		int[] newTriangles;
-
-		for (int i = 0; i < vertices.Length; i++) {
-			//If the vertex is inside the planes or in the volume between them, add it to the new mesh
-			if (SuperiorVertex (vertices [i], verticesA, biggestIndex) && InferiorVertex (vertices [i], verticesB, biggestIndex)) {
-
+		ArrayList newVertices = new ArrayList();
+		ArrayList newTriangles = new ArrayList();
+		int triangleIndex = 0;
+		for (int i = 0; i < triangles.Length - 3; i+=3) {
+			int first = triangles [i];
+			int second = triangles [i + 1];
+			int third = triangles [i + 2];
+			if (InsideRegion (vertices [first], verticesA, verticesB, biggestIndex)
+			   && InsideRegion (vertices [second], verticesA, verticesB, biggestIndex)
+			   && InsideRegion (vertices [third], verticesA, verticesB, biggestIndex)) {
+				newVertices.Add (vertices [first]);
+				newVertices.Add (vertices [second]);
+				newVertices.Add (vertices [third]);
+				newTriangles.Add (triangleIndex);
+				newTriangles.Add (triangleIndex + 1);
+				newTriangles.Add (triangleIndex + 2);
+				triangleIndex += 3;
 			}
 		}
+		int sizeVertices = newVertices.ToArray ().Length;
+		int sizeTriangles = newTriangles.ToArray ().Length;
+		Vector3[] nVertices = new Vector3[sizeVertices];
+		int[] nTriangles = new int[sizeTriangles];
+		for (int i = 0; i < sizeVertices; i++) {
+			nVertices [i] = (Vector3)newVertices [i];
+		}
+		for (int i = 0; i < sizeTriangles; i++) {
+			nTriangles [i] = (int)newTriangles [i];
+		}
 
+		sliced.vertices = nVertices;
+		sliced.triangles = nTriangles;
 		return sliced;
+	}
+
+	/**
+	 * Check if vertex is inside a region between two planes
+	 * */
+	private bool InsideRegion(Vector3 vertex, Vector3[] planeVerticesA, Vector3[] planeVerticesB, int biggestIndex){
+		return SuperiorVertex (vertex, planeVerticesA, biggestIndex) && InferiorVertex (vertex, planeVerticesB, biggestIndex);
 	}
 
 	/**
@@ -59,31 +105,7 @@ public class CompoundCollider : MonoBehaviour {
 		return response;
 	}
 		
-	private void TestCapsule(Transform transform, Bounds bounds, int[] sortedIndices){
-		//Create the capsule
-		GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-		//Rotate
-		Vector3 baseRotation;
-		switch (sortedIndices [0]) {
-		case 0:
-			//El eje X es el mayor 
-			baseRotation = new Vector3(0, 0, 90);				
-			break;
-		case 1:
-			baseRotation = new Vector3(0, 0, 0);
-			break;
-		case 2:
-			baseRotation = new Vector3(90, 0, 0);
-			break;
-		default:
-			baseRotation = new Vector3(0, 0, 0);
-			break;
-		}
-		capsule.transform.Rotate (transform.eulerAngles + baseRotation);
 
-		//Position capsule in the center of the object
-		capsule.transform.position = bounds.center;
-	}
 		
 	/**
 	 * Create child capsule positioned around a mesh bounds
@@ -121,9 +143,10 @@ public class CompoundCollider : MonoBehaviour {
 	}
 
 	/**
-	 * Create and center cutting plane
+	 * Create and center a cutting plane at a specified distance from the center of the object, along
+	 * the biggest axis
 	 * */
-	private GameObject CreateCuttingPlane(Bounds bounds, int[] sortedIndices){
+	private GameObject CreateCuttingPlane(Bounds bounds, int[] sortedIndices, float shift){
 
 		//Create the plane
 		GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
@@ -151,9 +174,26 @@ public class CompoundCollider : MonoBehaviour {
 		Vector3 scale = new Vector3(bounds.extents[sortedIndices[1]], 1, bounds.extents[sortedIndices[1]]);
 		plane.transform.localScale = scale;
 
-		//Position plane in the center of the object
+		//Position plane in the center of the object and shift
 		plane.transform.position = bounds.center;
-
+		Vector3 translation;
+		float shiftPos = bounds.center [sortedIndices [0]] - shift;
+		switch (sortedIndices [0]) {
+		case 0:
+			translation = new Vector3(shiftPos, plane.transform.position.y, plane.transform.position.z);				
+			break;
+		case 1:
+			translation = new Vector3(plane.transform.position.x, shiftPos, plane.transform.position.z);
+			break;
+		case 2:
+			translation = new Vector3(plane.transform.position.x, plane.transform.position.y, shiftPos);
+			break;
+		default:
+			translation = new Vector3(plane.transform.position.x, plane.transform.position.y, plane.transform.position.z);
+			break;
+		}
+		plane.transform.position = translation;
+		//plane.transform.position = (new Vector3(plane.transform.position.x, plane.transform.position.y, plane.transform.position.z- shift));
 		return plane;
 
 	}
