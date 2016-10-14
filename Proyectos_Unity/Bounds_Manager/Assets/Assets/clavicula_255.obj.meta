@@ -1,14 +1,14 @@
 fileFormatVersion: 2
-guid: c98911fe5b6aa477eb379dd351e11b02
-timeCreated: 1476299290
+guid: 60ece1ebeb201412398e54938500e811
+timeCreated: 1476451144
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: default
-    100002: //RootNode
-    400000: default
-    400002: //RootNode
+    100000: //RootNode
+    100002: default
+    400000: //RootNode
+    400002: default
     2300000: default
     3300000: default
     4300000: default
@@ -53,7 +53,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 1
+    normalImportMode: 0
     tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0

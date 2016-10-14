@@ -59,7 +59,7 @@ public class myMeshCut{
 
 				// whole triangle
 				if(sides[0] == sides[1] && sides[0] == sides[2]){
-
+					
 					if(sides[0]){ // left side
 
 						_leftSide.AddTriangle(

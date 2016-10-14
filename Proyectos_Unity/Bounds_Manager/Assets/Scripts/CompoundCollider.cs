@@ -6,183 +6,59 @@ public class CompoundCollider : MonoBehaviour {
 	public int n = 5;
 	public Material capMaterial;
 	public string childName = "Cylinder";
+	public string childCutName = "Cylinder";
 	// Use this for initialization
 	void Start(){
 
+		//Childs
+		GameObject child = transform.Find (childName).gameObject;
+		GameObject childCut = transform.Find (childCutName).gameObject;
+
 		//Bounds
-		Bounds bounds = gameObject.GetComponentInChildren<MeshRenderer>().bounds;
+		Bounds bounds = childCut.GetComponent<MeshRenderer>().bounds;
 
 		//Vertices and triangles
-		Vector3[] vertices = gameObject.GetComponentInChildren<MeshFilter>().mesh.vertices;
-		int[] triangles = gameObject.GetComponentInChildren<MeshFilter>().mesh.triangles;
+		Vector3[] vertices = child.GetComponent<MeshFilter>().mesh.vertices;
+		int[] triangles = child.GetComponent<MeshFilter>().mesh.triangles;
+
+		Vector2[] uvs = new Vector2[childCut.GetComponent<MeshFilter>().mesh.vertices.Length];
+		childCut.GetComponent<MeshFilter> ().mesh.uv = uvs;
 
 		//Sorted indices from bounds
 		int[] sortedIndices = SortIndices (bounds.size);
 
-		GameObject plane = CreateCuttingPlane(bounds, sortedIndices, 0);
-		GameObject hijo = transform.Find (childName).gameObject;
-	
-		GameObject[] pieces = myMeshCut.Cut (hijo,
-			plane.transform.position,
-			plane.transform.TransformDirection (plane.GetComponent<MeshFilter> ().mesh.normals [0]),
-			capMaterial);
-
-		CreateChildCapsule (pieces[0].GetComponent<MeshRenderer>().bounds, sortedIndices);
-		CreateChildCapsule (pieces[1].GetComponent<MeshRenderer>().bounds, sortedIndices);
-
-	}
-	/**void Start () {
-
-		//Bounds
-		Bounds bounds = gameObject.GetComponentInChildren<MeshRenderer>().bounds;
-
-		//Vertices and triangles
-		Vector3[] vertices = gameObject.GetComponentInChildren<MeshFilter>().mesh.vertices;
-		int[] triangles = gameObject.GetComponentInChildren<MeshFilter>().mesh.triangles;
-		Debug.Log ("Initial vertices: " + vertices.Length);
-		Debug.Log ("Initial triangles: " + triangles.Length);
-		//Sorted indices from bounds
-		int[] sortedIndices = SortIndices (bounds.size);
 
 		float step = (bounds.size [sortedIndices [0]] / n);
-
-		for (int i = 0; i < n-1; i++) {
-			//Get planes A and B with A < B along the biggest axis
-			GameObject planeA = CreateCuttingPlane(bounds, sortedIndices, i * step);
-			GameObject planeB = CreateCuttingPlane(bounds, sortedIndices, (i+1) * step);
-			Vector3[] verticesA = planeA.GetComponent<MeshFilter> ().mesh.vertices;
-			Vector3[] verticesB = planeB.GetComponent<MeshFilter> ().mesh.vertices;
-			Mesh cut = SliceMesh (verticesA, verticesB, vertices, triangles, sortedIndices [0]);
-			GameObject iteration = new GameObject ();
-			iteration.AddComponent<MeshFilter> ();
-			iteration.AddComponent<MeshRenderer> ();
-			iteration.GetComponent<MeshFilter> ().mesh = cut;
-
-
-			int[] meshSortedIndices = SortIndices (cut.bounds.size);
-			CreateChildCapsule (cut.bounds, meshSortedIndices);
+		GameObject nextPiece = null;
+		for (int i = 1; i < n+1; i++) {
+			GameObject plane = CreateCuttingPlane(bounds, sortedIndices, i*step);
+			GameObject copy = nextPiece == null ? GameObject.Instantiate (childCut) : nextPiece;
+			copy.transform.position = childCut.transform.position;
+			copy.transform.rotation = childCut.transform.rotation;
+			GameObject[] pieces = myMeshCut.Cut (copy,
+				plane.transform.position,
+				//new Vector3(0,1,0),
+				plane.transform.TransformDirection (plane.GetComponent<MeshFilter> ().mesh.normals [sortedIndices[0]]),
+				capMaterial);
+			GameObject capsule = CreateChildCapsule (pieces[0], pieces[0].GetComponent<MeshRenderer>().bounds, sortedIndices);
+			capsule.transform.parent = transform;
+			Destroy (pieces [0]);
+			nextPiece = pieces [1];
+			Destroy (pieces [1]);
+			Destroy (plane);
+			Destroy (copy);
 		}
-
-
+			
 	}
-	*/
-
-	/**
-	 * Slice mesh between two planes A and B
-	 * */
-	private Mesh SliceMesh(Vector3[] verticesA, Vector3[] verticesB, Vector3[] vertices, int[] triangles, int biggestIndex){
-
-		//New Mesh
-		Mesh sliced = new Mesh();
-		ArrayList newVertices = new ArrayList();
-		ArrayList newTriangles = new ArrayList();
-		for (int i = 0; i < triangles.Length - 3; i+=3) {
-			int first = triangles [i];
-			int second = triangles [i + 1];
-			int third = triangles [i + 2];
-
-			if (InsideRegion (vertices [first], verticesA, verticesB, biggestIndex)
-			   && InsideRegion (vertices [second], verticesA, verticesB, biggestIndex)
-			   && InsideRegion (vertices [third], verticesA, verticesB, biggestIndex)) {
-				int indexFirst = SearchForVertex (vertices [first], newVertices);
-				int indexSecond = SearchForVertex (vertices [second], newVertices);
-				int indexThird = SearchForVertex (vertices [third], newVertices);
-
-				if (indexFirst == -1) {
-					newVertices.Add (vertices [first]);
-					newTriangles.Add (newVertices.Count-1);
-				}
-				else
-					newTriangles.Add (indexFirst);
-				
-				if (indexSecond == -1) {
-					newVertices.Add (vertices [second]);
-					newTriangles.Add (newVertices.Count-1);
-				}
-				else
-					newTriangles.Add (indexSecond);
-
-				if (indexThird == -1) {
-					newVertices.Add (vertices [third]);
-					newTriangles.Add (newVertices.Count-1);
-				}
-				else
-					newTriangles.Add (indexThird);
-			}
-
-		}
-
-		int sizeVertices = newVertices.Count;
-		int sizeTriangles = newTriangles.Count;
-		Debug.Log ("Final vertices: " + sizeVertices);
-		Debug.Log ("Final triangles: " + sizeTriangles);
-		Vector3[] nVertices = new Vector3[sizeVertices];
-		int[] nTriangles = new int[sizeTriangles];
-		for (int i = 0; i < sizeVertices; i++) {
-			nVertices [i] = (Vector3)newVertices [i];
-		}
-		for (int i = 0; i < sizeTriangles; i++) {
-			nTriangles [i] = (int)newTriangles [i];
-		}
-
-		sliced.vertices = nVertices;
-		sliced.triangles = nTriangles;
-		return sliced;
-	}
-
-	/**
-	 * Check search for a vertex inside an array and return its index
-	 * */
-	private int SearchForVertex(Vector3 vertex, ArrayList array){
-
-		int index = -1;
-		bool end = false;
-		for (int i = 0; i < array.Count && !end; i++) {
-			if (vertex.Equals( array [i])) {
-				end = true;
-				index = i;
-			}
-		}
-		return index;
-	}
-
-	/**
-	 * Check if vertex is inside a region between two planes
-	 * */
-	private bool InsideRegion(Vector3 vertex, Vector3[] planeVerticesA, Vector3[] planeVerticesB, int biggestIndex){
-		return SuperiorVertex (vertex, planeVerticesA, biggestIndex) && InferiorVertex (vertex, planeVerticesB, biggestIndex);
-	}
-
-	/**
-	 * Check if vertex is greater to a plane or inside in a certain direction
-	 * */
-	private bool SuperiorVertex(Vector3 vertex, Vector3[] planeVertices, int biggestIndex){
-		bool response = true;
-		for(int i = 0; i < planeVertices.Length && !response; i++){
-			if (vertex [biggestIndex] < planeVertices [i] [biggestIndex])
-				response = false;
-		}
-		return response;
-	}
-
-	/**
-	 * Check if vertex is lower to a plane or inside in a certain direction
-	 * */
-	private bool InferiorVertex(Vector3 vertex, Vector3[] planeVertices, int biggestIndex){
-		bool response = true;
-		for(int i = 0; i < planeVertices.Length && !response; i++){
-			if (vertex [biggestIndex] > planeVertices [i] [biggestIndex])
-				response = false;
-		}
-		return response;
-	}
-		
-
 		
 	/**
 	 * Create child capsule positioned around a mesh bounds
 	 * */
-	private void CreateChildCapsule(Bounds bounds, int[] sortedIndices){
+	private GameObject CreateChildCapsule(GameObject around, Bounds bounds, int[] sortedIndices){
+		//Reference object in the world space
+		//GameObject reference = new GameObject();
+		//reference.name = "Ref";
+
 		//Create the capsule
 		GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
 
@@ -192,6 +68,7 @@ public class CompoundCollider : MonoBehaviour {
 
 		//Rotate and scale the plane 
 		Vector3 angles;
+		//float shift = Vector3.Angle (reference.transform.position, around.transform.position);
 		switch (sortedIndices [0]) {
 		case 0:
 			//El eje X es el mayor 
@@ -211,6 +88,8 @@ public class CompoundCollider : MonoBehaviour {
 
 		//Position capsule in the center of the object
 		capsule.transform.position = bounds.center;
+
+		return capsule;
 
 	}
 
@@ -248,24 +127,24 @@ public class CompoundCollider : MonoBehaviour {
 		plane.transform.localScale = scale;
 
 		//Position plane in the center of the object and shift
-		plane.transform.position = bounds.center;
+		plane.transform.position = bounds.center - bounds.extents;
 		Vector3 translation;
-		float shiftPos = bounds.center [sortedIndices [0]] - shift;
+
 		switch (sortedIndices [0]) {
 		case 0:
-			translation = new Vector3(shiftPos, plane.transform.position.y, plane.transform.position.z);				
+			translation = new Vector3(shift, 0, 0);				
 			break;
 		case 1:
-			translation = new Vector3(plane.transform.position.x, shiftPos, plane.transform.position.z);
+			translation = new Vector3(0, shift, 0);	
 			break;
 		case 2:
-			translation = new Vector3(plane.transform.position.x, plane.transform.position.y, shiftPos);
+			translation = new Vector3(0, 0, shift);	
 			break;
 		default:
-			translation = new Vector3(plane.transform.position.x, plane.transform.position.y, plane.transform.position.z);
+			translation = new Vector3(0, 0, 0);	
 			break;
 		}
-		plane.transform.position = translation;
+		plane.transform.position = plane.transform.position + translation;
 
 		return plane;
 
