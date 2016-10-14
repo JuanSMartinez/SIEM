@@ -4,9 +4,10 @@ using System;
 public class CompoundCollider : MonoBehaviour {
 
 	public int n = 5;
-
+	public Material capMaterial;
+	public string childName = "Cylinder";
 	// Use this for initialization
-	void Start () {
+	void Start(){
 
 		//Bounds
 		Bounds bounds = gameObject.GetComponentInChildren<MeshRenderer>().bounds;
@@ -18,7 +19,33 @@ public class CompoundCollider : MonoBehaviour {
 		//Sorted indices from bounds
 		int[] sortedIndices = SortIndices (bounds.size);
 
+		GameObject plane = CreateCuttingPlane(bounds, sortedIndices, 0);
+		GameObject hijo = transform.Find (childName).gameObject;
+	
+		GameObject[] pieces = myMeshCut.Cut (hijo,
+			plane.transform.position,
+			plane.transform.TransformDirection (plane.GetComponent<MeshFilter> ().mesh.normals [0]),
+			capMaterial);
+
+		CreateChildCapsule (pieces[0].GetComponent<MeshRenderer>().bounds, sortedIndices);
+		CreateChildCapsule (pieces[1].GetComponent<MeshRenderer>().bounds, sortedIndices);
+
+	}
+	/**void Start () {
+
+		//Bounds
+		Bounds bounds = gameObject.GetComponentInChildren<MeshRenderer>().bounds;
+
+		//Vertices and triangles
+		Vector3[] vertices = gameObject.GetComponentInChildren<MeshFilter>().mesh.vertices;
+		int[] triangles = gameObject.GetComponentInChildren<MeshFilter>().mesh.triangles;
+		Debug.Log ("Initial vertices: " + vertices.Length);
+		Debug.Log ("Initial triangles: " + triangles.Length);
+		//Sorted indices from bounds
+		int[] sortedIndices = SortIndices (bounds.size);
+
 		float step = (bounds.size [sortedIndices [0]] / n);
+
 		for (int i = 0; i < n-1; i++) {
 			//Get planes A and B with A < B along the biggest axis
 			GameObject planeA = CreateCuttingPlane(bounds, sortedIndices, i * step);
@@ -26,11 +53,19 @@ public class CompoundCollider : MonoBehaviour {
 			Vector3[] verticesA = planeA.GetComponent<MeshFilter> ().mesh.vertices;
 			Vector3[] verticesB = planeB.GetComponent<MeshFilter> ().mesh.vertices;
 			Mesh cut = SliceMesh (verticesA, verticesB, vertices, triangles, sortedIndices [0]);
+			GameObject iteration = new GameObject ();
+			iteration.AddComponent<MeshFilter> ();
+			iteration.AddComponent<MeshRenderer> ();
+			iteration.GetComponent<MeshFilter> ().mesh = cut;
+
+
 			int[] meshSortedIndices = SortIndices (cut.bounds.size);
 			CreateChildCapsule (cut.bounds, meshSortedIndices);
 		}
 
+
 	}
+	*/
 
 	/**
 	 * Slice mesh between two planes A and B
@@ -41,25 +76,46 @@ public class CompoundCollider : MonoBehaviour {
 		Mesh sliced = new Mesh();
 		ArrayList newVertices = new ArrayList();
 		ArrayList newTriangles = new ArrayList();
-		int triangleIndex = 0;
 		for (int i = 0; i < triangles.Length - 3; i+=3) {
 			int first = triangles [i];
 			int second = triangles [i + 1];
 			int third = triangles [i + 2];
+
 			if (InsideRegion (vertices [first], verticesA, verticesB, biggestIndex)
 			   && InsideRegion (vertices [second], verticesA, verticesB, biggestIndex)
 			   && InsideRegion (vertices [third], verticesA, verticesB, biggestIndex)) {
-				newVertices.Add (vertices [first]);
-				newVertices.Add (vertices [second]);
-				newVertices.Add (vertices [third]);
-				newTriangles.Add (triangleIndex);
-				newTriangles.Add (triangleIndex + 1);
-				newTriangles.Add (triangleIndex + 2);
-				triangleIndex += 3;
+				int indexFirst = SearchForVertex (vertices [first], newVertices);
+				int indexSecond = SearchForVertex (vertices [second], newVertices);
+				int indexThird = SearchForVertex (vertices [third], newVertices);
+
+				if (indexFirst == -1) {
+					newVertices.Add (vertices [first]);
+					newTriangles.Add (newVertices.Count-1);
+				}
+				else
+					newTriangles.Add (indexFirst);
+				
+				if (indexSecond == -1) {
+					newVertices.Add (vertices [second]);
+					newTriangles.Add (newVertices.Count-1);
+				}
+				else
+					newTriangles.Add (indexSecond);
+
+				if (indexThird == -1) {
+					newVertices.Add (vertices [third]);
+					newTriangles.Add (newVertices.Count-1);
+				}
+				else
+					newTriangles.Add (indexThird);
 			}
+
 		}
-		int sizeVertices = newVertices.ToArray ().Length;
-		int sizeTriangles = newTriangles.ToArray ().Length;
+
+		int sizeVertices = newVertices.Count;
+		int sizeTriangles = newTriangles.Count;
+		Debug.Log ("Final vertices: " + sizeVertices);
+		Debug.Log ("Final triangles: " + sizeTriangles);
 		Vector3[] nVertices = new Vector3[sizeVertices];
 		int[] nTriangles = new int[sizeTriangles];
 		for (int i = 0; i < sizeVertices; i++) {
@@ -75,6 +131,22 @@ public class CompoundCollider : MonoBehaviour {
 	}
 
 	/**
+	 * Check search for a vertex inside an array and return its index
+	 * */
+	private int SearchForVertex(Vector3 vertex, ArrayList array){
+
+		int index = -1;
+		bool end = false;
+		for (int i = 0; i < array.Count && !end; i++) {
+			if (vertex.Equals( array [i])) {
+				end = true;
+				index = i;
+			}
+		}
+		return index;
+	}
+
+	/**
 	 * Check if vertex is inside a region between two planes
 	 * */
 	private bool InsideRegion(Vector3 vertex, Vector3[] planeVerticesA, Vector3[] planeVerticesB, int biggestIndex){
@@ -85,10 +157,10 @@ public class CompoundCollider : MonoBehaviour {
 	 * Check if vertex is greater to a plane or inside in a certain direction
 	 * */
 	private bool SuperiorVertex(Vector3 vertex, Vector3[] planeVertices, int biggestIndex){
-		bool response = false;
+		bool response = true;
 		for(int i = 0; i < planeVertices.Length && !response; i++){
-			if (vertex [biggestIndex] >= planeVertices [i] [biggestIndex])
-				response = true;
+			if (vertex [biggestIndex] < planeVertices [i] [biggestIndex])
+				response = false;
 		}
 		return response;
 	}
@@ -97,10 +169,10 @@ public class CompoundCollider : MonoBehaviour {
 	 * Check if vertex is lower to a plane or inside in a certain direction
 	 * */
 	private bool InferiorVertex(Vector3 vertex, Vector3[] planeVertices, int biggestIndex){
-		bool response = false;
+		bool response = true;
 		for(int i = 0; i < planeVertices.Length && !response; i++){
-			if (vertex [biggestIndex] <= planeVertices [i] [biggestIndex])
-				response = true;
+			if (vertex [biggestIndex] > planeVertices [i] [biggestIndex])
+				response = false;
 		}
 		return response;
 	}
@@ -149,6 +221,7 @@ public class CompoundCollider : MonoBehaviour {
 	private GameObject CreateCuttingPlane(Bounds bounds, int[] sortedIndices, float shift){
 
 		//Create the plane
+
 		GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
 
 		//Rotate and scale the plane 
@@ -193,7 +266,7 @@ public class CompoundCollider : MonoBehaviour {
 			break;
 		}
 		plane.transform.position = translation;
-		//plane.transform.position = (new Vector3(plane.transform.position.x, plane.transform.position.y, plane.transform.position.z- shift));
+
 		return plane;
 
 	}
