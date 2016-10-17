@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\Surgery\Compound Collider\CompoundCollider.cs" />
      <Compile Include="Assets\Scripts\Surgery\Compound Collider\Mesh_Maker.cs" />
      <Compile Include="Assets\Scripts\Surgery\Compound Collider\myMeshCut.cs" />
+     <Compile Include="Assets\Scripts\Surgery\Simulation\Interaction.cs" />
      <Compile Include="Assets\Scripts\Surgery\Simulation\ReducionTraining.cs" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>

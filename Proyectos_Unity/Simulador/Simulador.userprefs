@@ -2,12 +2,13 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Surgery/Simulation/ReducionTraining.cs">
     <Files>
+      <File FileName="Assets/Scripts/Surgery/Simulation/ReducionTraining.cs" Line="194" Column="1" />
       <File FileName="Assets/Scripts/Surgery/Compound Collider/CompoundCollider.cs" Line="43" Column="42" />
       <File FileName="Assets/Scripts/Haptics/HapticClassScript.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Haptics/GenericFunctionsClass.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Haptics/ForceManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Surgery/Simulation/ReducionTraining.cs" Line="13" Column="32" />
-      <File FileName="Assets/Scripts/Haptics/PluginImport.cs" Line="34" Column="21" />
+      <File FileName="Assets/Scripts/Haptics/PluginImport.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Surgery/Simulation/Interaction.cs" Line="22" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
