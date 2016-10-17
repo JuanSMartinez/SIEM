@@ -40,7 +40,7 @@ public class CompoundCollider : MonoBehaviour {
 				//new Vector3(0,1,0),
 				plane.transform.TransformDirection (plane.GetComponent<MeshFilter> ().mesh.normals [sortedIndices[0]]),
 				capMaterial);
-			GameObject capsule = CreateChildCapsule (pieces[0], pieces[0].GetComponent<MeshRenderer>().bounds, sortedIndices);
+			GameObject capsule = CreateChildSphere (pieces[0], pieces[0].GetComponent<MeshRenderer>().bounds, sortedIndices);
 			capsule.transform.parent = transform;
 			Destroy (pieces [0]);
 			nextPiece = pieces [1];
@@ -54,17 +54,17 @@ public class CompoundCollider : MonoBehaviour {
 	/**
 	 * Create child capsule positioned around a mesh bounds
 	 * */
-	private GameObject CreateChildCapsule(GameObject around, Bounds bounds, int[] sortedIndices){
+	private GameObject CreateChildSphere(GameObject around, Bounds bounds, int[] sortedIndices){
 		//Reference object in the world space
 		//GameObject reference = new GameObject();
 		//reference.name = "Ref";
 
 		//Create the capsule
-		GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+		GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 		capsule.GetComponent<MeshRenderer> ().enabled = false;
 
 		//Scale to the second biggest axis and the third biggest axis
-		Vector3 scale = new Vector3(bounds.extents[sortedIndices[1]], bounds.extents[sortedIndices[0]], bounds.extents[sortedIndices[1]]);
+		Vector3 scale = new Vector3(bounds.extents[sortedIndices[0]], bounds.extents[sortedIndices[0]], bounds.extents[sortedIndices[0]]);
 		capsule.transform.localScale = scale;
 
 		//Rotate and scale the plane 

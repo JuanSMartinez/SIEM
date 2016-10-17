@@ -7,8 +7,14 @@ public class CompoundCollider : MonoBehaviour {
 	public Material capMaterial;
 	public string childName = "Cylinder";
 	public string childCutName = "Cylinder";
+	private GameObject reference;
+
 	// Use this for initialization
 	void Start(){
+
+		//Reference object in the world space
+		reference = new GameObject();
+		reference.name = "Ref";
 
 		//Childs
 		GameObject child = transform.Find (childName).gameObject;
@@ -54,20 +60,22 @@ public class CompoundCollider : MonoBehaviour {
 	/**
 	 * Create child capsule positioned around a mesh bounds
 	 * */
+
 	private GameObject CreateChildCapsule(GameObject around, Bounds bounds, int[] sortedIndices){
-		//Reference object in the world space
-		//GameObject reference = new GameObject();
-		//reference.name = "Ref";
+		
 
 		//Create the capsule
-		GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+		GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
 		//Scale to the second biggest axis and the third biggest axis
-		Vector3 scale = new Vector3(bounds.size[sortedIndices[1]], bounds.extents[sortedIndices[0]], bounds.size[sortedIndices[1]]);
+		Vector3 scale = new Vector3(bounds.size[sortedIndices[2]], bounds.size[sortedIndices[2]], bounds.size[sortedIndices[2]]);
 		capsule.transform.localScale = scale;
 
 		//Rotate and scale the plane 
 		Vector3 angles;
+		Vector3 correction = new Vector3 (Vector3.Angle (transform.right, reference.transform.right),
+			                     Vector3.Angle (transform.up, reference.transform.up),
+			                     Vector3.Angle (transform.forward, reference.transform.forward));
 		//float shift = Vector3.Angle (reference.transform.position, around.transform.position);
 		switch (sortedIndices [0]) {
 		case 0:
@@ -84,7 +92,8 @@ public class CompoundCollider : MonoBehaviour {
 			angles = new Vector3(0, 0, 0);
 			break;
 		}
-		capsule.transform.Rotate (angles);
+
+		capsule.transform.Rotate (correction);
 
 		//Position capsule in the center of the object
 		capsule.transform.position = bounds.center;
