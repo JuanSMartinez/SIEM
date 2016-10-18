@@ -43,8 +43,10 @@ public class Interaction : MonoBehaviour {
 
 		//Constant gain and magnitude
 		float gain = 0.2f;
-		ForceManager.SetEnvironmentForce(type, forceIndex, position, direction, gain, stiffness, 0, 0);
-		Debug.Log ("Force started with index " + forceIndex);
+		if (GenericFunctionsClass.GetGrabbed ()) {
+			ForceManager.SetEnvironmentForce (type, forceIndex, position, direction, gain, stiffness, 0, 0);
+			Debug.Log ("Force started with index " + forceIndex);
+		}
 	}
 
 	//Collision leaving

@@ -10,10 +10,12 @@ public class GenericFunctionsClass : MonoBehaviour {
 	/*************************************************************/
 	// Variables
 	/*************************************************************/
+
+	//Lock
+	private static object obj = new object();
 	
 	//Haptic Properties
 	private HapticProperties myHapticPropertiesScript;
-	
 
 	//Access to script SimpleShapeManipulation
 	public HapticClassScript myHapticClassScript;
@@ -32,6 +34,7 @@ public class GenericFunctionsClass : MonoBehaviour {
 
 	//Manipulated object variables
 	private int clickCount = 0;
+	private static bool grabbed = false;
 	private GameObject manipObj = null;
 	private Transform prevParent;
 
@@ -323,6 +326,7 @@ public class GenericFunctionsClass : MonoBehaviour {
 
 			}
 			clickCount++;
+			ToggleGrabbed ();
 		}
 		else 
 		{
@@ -341,11 +345,24 @@ public class GenericFunctionsClass : MonoBehaviour {
 			//Reset prevParent
 			prevParent = null;
 
+			ToggleGrabbed ();
 		}
 
 		//Only in Manipulation otherwise object are not moving so there is no need to proceed
 		UpdateHapticObjectMatrixTransform();
 
+	}
+
+	public static bool GetGrabbed(){
+		lock(obj){
+			return grabbed;
+		}
+	}
+
+	private static void ToggleGrabbed(){
+		lock (obj) {
+			grabbed = !grabbed;
+		}
 	}
 	/******************************************************************************************************************************************************************/
 }
