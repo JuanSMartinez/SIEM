@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+
 public class CompoundCollider : MonoBehaviour {
 
 	public int n = 5;
@@ -103,19 +104,20 @@ public class CompoundCollider : MonoBehaviour {
 		//Create the plane
 
 		GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+		plane.GetComponent<MeshCollider> ().enabled = false;
 
 		//Rotate and scale the plane 
 		Vector3 angles;
 		switch (sortedIndices [0]) {
 		case 0:
 			//El eje X es el mayor 
-			angles = new Vector3(0, 0, 90);				
+			angles = new Vector3(0, 0, -90);				
 			break;
 		case 1:
 			angles = new Vector3(0, 0, 0);
 			break;
 		case 2:
-			angles = new Vector3(90, 0, 0);
+			angles = new Vector3(-90, 0, 0);
 			break;
 		default:
 			angles = new Vector3(0, 0, 0);

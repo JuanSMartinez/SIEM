@@ -3,8 +3,8 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Haptic Project Components\Scripts\Script Scene\ReducionTraining.cs">
     <Files>
       <File FileName="Assets\Haptic Project Components\Scripts\Script Scene\ForceManager.cs" Line="14" Column="2" />
-      <File FileName="Assets\Haptic Project Components\Scripts\Script Scene\ReducionTraining.cs" Line="192" Column="5" />
-      <File FileName="Assets\Haptic Project Components\Scripts\Interactions\Interaction.cs" Line="16" Column="3" />
+      <File FileName="Assets\Haptic Project Components\Scripts\Script Scene\ReducionTraining.cs" Line="193" Column="3" />
+      <File FileName="Assets\Haptic Project Components\Scripts\Interactions\Interaction.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
