@@ -12,6 +12,13 @@ public class Interaction : MonoBehaviour {
 	//Haptic Mesh
 	public string hapticMeshName;
 
+	//Events
+	public delegate void CollisionAction();
+	public static event CollisionAction OnCollision;
+
+	public delegate void ExitCollisionAction ();
+	public static event ExitCollisionAction ExitCollision;
+
 	// Use this for initialization
 	void Start () {
 		forceIndex = ForceManager.GetNextIndex ();
@@ -45,14 +52,20 @@ public class Interaction : MonoBehaviour {
 		float gain = 0.2f;
 		if (GenericFunctionsClass.GetGrabbed ()) {
 			ForceManager.SetEnvironmentForce (type, forceIndex, position, direction, gain, stiffness, 0, 0);
-			Debug.Log ("Force started with index " + forceIndex);
+
 		}
+		else
+			ForceManager.StopEnvironmentForce (forceIndex);
+
+		if (OnCollision != null)
+			OnCollision ();
+
 	}
 
 	//Collision leaving
 	void OnCollisionExit(Collision collision){
-
 		ForceManager.StopEnvironmentForce (forceIndex);
-		Debug.Log ("Force stoped with index " + forceIndex);
+		if (ExitCollision != null)
+			ExitCollision ();
 	}
 }
