@@ -18,3 +18,4 @@ C:\Users\Juan Sebastian\Documents\Git\SIEM\Proyectos_Unity\Simulador\Temp\bin\De
 C:\Users\Juan Sebastian\Documents\Git\SIEM\Proyectos_Unity\Simulador\Temp\bin\Debug\UnityEngine.Networking.xml
 C:\Users\Juan Sebastian\Documents\Git\SIEM\Proyectos_Unity\Simulador\obj\Debug\Assembly-CSharp.dll
 C:\Users\Juan Sebastian\Documents\Git\SIEM\Proyectos_Unity\Simulador\obj\Debug\Assembly-CSharp.pdb
+C:\Users\Juan Sebastian\Documents\Git\SIEM\Proyectos_Unity\Simulador\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache

@@ -12,15 +12,15 @@ public class CompoundCollider : MonoBehaviour {
 	void Start(){
 
 		//Childs
-		GameObject child = transform.Find (childName).gameObject;
+		//GameObject child = transform.Find (childName).gameObject;
 		GameObject childCut = transform.Find (childCutName).gameObject;
 
 		//Bounds
 		Bounds bounds = childCut.GetComponent<MeshRenderer>().bounds;
 
 		//Vertices and triangles
-		Vector3[] vertices = child.GetComponent<MeshFilter>().mesh.vertices;
-		int[] triangles = child.GetComponent<MeshFilter>().mesh.triangles;
+		//Vector3[] vertices = child.GetComponent<MeshFilter>().mesh.vertices;
+		//int[] triangles = child.GetComponent<MeshFilter>().mesh.triangles;
 
 		Vector2[] uvs = new Vector2[childCut.GetComponent<MeshFilter>().mesh.vertices.Length];
 		childCut.GetComponent<MeshFilter> ().mesh.uv = uvs;

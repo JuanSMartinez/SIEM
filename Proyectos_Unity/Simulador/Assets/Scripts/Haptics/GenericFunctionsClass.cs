@@ -139,8 +139,8 @@ public class GenericFunctionsClass : MonoBehaviour {
 		//Convert IntPtr to Double3Array
 		myProxyRight =  ConverterClass.ConvertIntPtrToDouble3(PluginImport.GetProxyRight());
 		//Attach the Cursor Node
-		Vector3 rightCursor = new Vector3();
-		rightCursor = ConverterClass.ConvertDouble3ToVector3(myProxyRight);
+		//Vector3 rightCursor = new Vector3();
+		//rightCursor = ConverterClass.ConvertDouble3ToVector3(myProxyRight);
 
 		//Proxy Direction
 		//Convert IntPtr to Double3Array
