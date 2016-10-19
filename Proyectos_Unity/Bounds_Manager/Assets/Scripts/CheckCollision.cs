@@ -3,11 +3,11 @@ using System.Collections;
 
 public class CheckCollision : MonoBehaviour {
 
-	private int myIndex;
+	//private int myIndex;
 
 	// Use this for initialization
 	void Start () {
-		myIndex = StaticVariables.GetNextIndex ();
+		//myIndex = StaticVariables.GetNextIndex ();
 
 	}
 	

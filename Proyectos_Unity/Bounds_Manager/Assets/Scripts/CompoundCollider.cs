@@ -17,15 +17,15 @@ public class CompoundCollider : MonoBehaviour {
 		reference.name = "Ref";
 
 		//Childs
-		GameObject child = transform.Find (childName).gameObject;
+		//GameObject child = transform.Find (childName).gameObject;
 		GameObject childCut = transform.Find (childCutName).gameObject;
 
 		//Bounds
 		Bounds bounds = childCut.GetComponent<MeshRenderer>().bounds;
 
 		//Vertices and triangles
-		Vector3[] vertices = child.GetComponent<MeshFilter>().mesh.vertices;
-		int[] triangles = child.GetComponent<MeshFilter>().mesh.triangles;
+		//Vector3[] vertices = child.GetComponent<MeshFilter>().mesh.vertices;
+		//int[] triangles = child.GetComponent<MeshFilter>().mesh.triangles;
 
 		Vector2[] uvs = new Vector2[childCut.GetComponent<MeshFilter>().mesh.vertices.Length];
 		childCut.GetComponent<MeshFilter> ().mesh.uv = uvs;
@@ -72,12 +72,12 @@ public class CompoundCollider : MonoBehaviour {
 		capsule.transform.localScale = scale;
 
 		//Rotate and scale the plane 
-		Vector3 angles;
+		//Vector3 angles;
 		Vector3 correction = new Vector3 (Vector3.Angle (transform.right, reference.transform.right),
 			                     Vector3.Angle (transform.up, reference.transform.up),
 			                     Vector3.Angle (transform.forward, reference.transform.forward));
 		//float shift = Vector3.Angle (reference.transform.position, around.transform.position);
-		switch (sortedIndices [0]) {
+		/*switch (sortedIndices [0]) {
 		case 0:
 			//El eje X es el mayor 
 			angles = new Vector3(0, 0, 90);				
@@ -91,7 +91,7 @@ public class CompoundCollider : MonoBehaviour {
 		default:
 			angles = new Vector3(0, 0, 0);
 			break;
-		}
+		}*/
 
 		capsule.transform.Rotate (correction);
 

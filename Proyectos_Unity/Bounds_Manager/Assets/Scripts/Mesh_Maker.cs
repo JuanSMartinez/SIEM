@@ -193,17 +193,6 @@ public class Mesh_Maker{
 	/// <summary>
 	/// Creates and returns a new mesh with generated lightmap uvs
 	/// </summary>
-	public Mesh GetMesh_GenerateSecondaryUVSet( UnityEditor.UnwrapParam param){
 
-		Mesh shape = GetMesh();
-		
-		#if UNITY_EDITOR
-		// for light mapping
-		UnityEditor.Unwrapping.GenerateSecondaryUVSet(shape, param);
-
-		#endif
-
-		return shape;
-	}
 
 }
