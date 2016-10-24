@@ -38,6 +38,7 @@ public class GenericFunctionsClass : MonoBehaviour {
 	private GameObject manipObj = null;
 	private Transform prevParent;
 
+
 	
 	/*************************************************************/
 	
@@ -316,17 +317,20 @@ public class GenericFunctionsClass : MonoBehaviour {
 				//Setup Manipulated object Hierarchy as a child of haptic cursor - Only if object is declared as Manipulable object
 				if(manipObj != null && !PluginImport.IsFixed(PluginImport.GetManipulatedObjectId()))
 				{
-					//Store the Previous parent object	
+					//Store the Previous parent object 
 					prevParent = manipObj.transform.parent.parent;
+
 
 					//Asign New Parent - the tip of the manipulation object device
 					manipObj.transform.parent.parent = myHapticClassScript.hapticCursor.transform;
+
+
 
 				}
 
 			}
 			clickCount++;
-			ToggleGrabbed ();
+			Grab ();
 		}
 		else 
 		{
@@ -345,12 +349,31 @@ public class GenericFunctionsClass : MonoBehaviour {
 			//Reset prevParent
 			prevParent = null;
 
-			ToggleGrabbed ();
+			//Clear all unwanted childs
+			for (int i = 0; i < myHapticClassScript.hapticCursor.transform.childCount; i++) {
+				if(!myHapticClassScript.hapticCursor.transform.GetChild(i).name.Equals("Sphere")
+					&& !myHapticClassScript.hapticCursor.transform.GetChild(i).name.Equals("Capsule"))
+					myHapticClassScript.hapticCursor.transform.GetChild(i).transform.parent = null;
+			}
+
+			Ungrab ();
 		}
 
 		//Only in Manipulation otherwise object are not moving so there is no need to proceed
 		UpdateHapticObjectMatrixTransform();
 
+	}
+
+	public static void Grab(){
+		lock (obj) {
+			grabbed = true;
+		}
+	}
+
+	public static void Ungrab(){
+		lock (obj) {
+			grabbed = false;
+		}
 	}
 
 	public static bool GetGrabbed(){

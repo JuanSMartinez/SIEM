@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\Surgery\Compound Collider\myMeshCut.cs" />
      <Compile Include="Assets\Scripts\Surgery\Simulation\Interaction.cs" />
      <Compile Include="Assets\Scripts\Surgery\Simulation\ReducionTraining.cs" />
+     <Compile Include="Assets\Scripts\Surgery\Simulation\SceneSelection.cs" />
      <Compile Include="Assets\Scripts\Surgery\Simulation\UIManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
