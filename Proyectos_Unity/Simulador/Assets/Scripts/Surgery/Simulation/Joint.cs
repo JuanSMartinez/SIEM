@@ -58,17 +58,32 @@ public class Joint : MonoBehaviour {
 	}
 
 	private void CheckRotation(){
-		//X,Y,Z rotation
-		float rotX = Vector3.Angle(anchor.right, transform.right);
-		float rotY = Vector3.Angle(anchor.up, transform.up);
-		float rotZ = Vector3.Angle(anchor.forward, transform.forward);
+		float rotX;
+		float rotY;
+		float rotZ;
 
-		float rotationX = rotX >= maxRotationX ? maxRotationX : rotX;
-		float rotationY = rotY >= maxRotationY ? maxRotationY : rotY;
-		float rotationZ = rotZ >= maxRotationZ ? maxRotationZ : rotZ;
+		if (transform.eulerAngles.x >= maxRotationX) {
+			rotX = maxRotationX;
+		} else if (transform.eulerAngles.x <= -maxRotationX) {
+			rotX = -maxRotationX;
+		} else
+			rotX = transform.eulerAngles.x;
 
-		Vector3 rotation = new Vector3 (rotationX, rotationY, rotationZ);
-		transform.Rotate (rotation);
+		if (transform.eulerAngles.y >= maxRotationY) {
+			rotY = maxRotationY;
+		} else if (transform.eulerAngles.y <= -maxRotationY) {
+			rotY = -maxRotationY;
+		} else
+			rotY = transform.eulerAngles.y;
+
+		if (transform.eulerAngles.z >= maxRotationZ) {
+			rotZ = maxRotationZ;
+		} else if (transform.eulerAngles.z <= -maxRotationZ) {
+			rotZ = -maxRotationZ;
+		} else
+			rotZ = transform.eulerAngles.z;
+
+		transform.eulerAngles = new Vector3 (rotX, rotY, rotZ);
 	}
 
 
