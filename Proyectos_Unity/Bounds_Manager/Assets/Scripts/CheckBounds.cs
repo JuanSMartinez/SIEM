@@ -4,14 +4,15 @@ using System.Collections;
 public class CheckBounds : MonoBehaviour {
 
 	public float speed = 2.0f;
+	public float maxDiff = 1.0f;
 
-	//Initial forward position
-	private Vector3 initial;
+	//Initial position
+	private Vector3 init;
 
 	// Use this for initialization
 	void Start () {
 		//Get initial transform of the object
-		initial = gameObject.transform.position;
+		init = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -33,12 +34,33 @@ public class CheckBounds : MonoBehaviour {
 
 	//Check bounds and alert
 	private void checkBounds(){
-		Vector3 actualPosition = gameObject.transform.position;
-		float diff = Mathf.Abs (Vector3.Distance (actualPosition, initial));
-		GUIText text = GameObject.Find ("Label").GetComponent<GUIText> ();
-		text.text = "Initial: " + initial +
-		"\n Actual: " + actualPosition +
-		"\n Diff: " + diff;
 		
+		setCoordinate (0, transform.position.x, init.x);
+		setCoordinate (1, transform.position.y, init.y);
+		setCoordinate (2, transform.position.z, init.z);
+
+	}
+
+	private void setCoordinate(int index, float coordinate, float initialCoordinate){
+		float diff = Mathf.Abs (coordinate - initialCoordinate);
+		int multiplier = coordinate >= initialCoordinate ? 1 : -1;
+		float value = diff >= maxDiff ? initialCoordinate + multiplier*maxDiff : coordinate;
+		Vector3 newPos;
+		switch (index) {
+		case 0:
+			newPos = new Vector3 (value, transform.position.y, transform.position.z);
+			transform.position = newPos;
+			break;
+		case 1:
+			newPos = new Vector3 (transform.position.x, value, transform.position.z);
+			transform.position = newPos;
+			break;
+		case 2:
+			newPos = new Vector3 (transform.position.x, transform.position.y, value);
+			transform.position = newPos;
+			break;
+		default:
+			break;
+		}
 	}
 }
