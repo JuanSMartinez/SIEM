@@ -31,6 +31,7 @@ public class Joint : MonoBehaviour {
 
 		//Check rotation
 		CheckRotation();
+
 	
 	}
 
@@ -62,28 +63,29 @@ public class Joint : MonoBehaviour {
 		float rotY;
 		float rotZ;
 
-		if (transform.eulerAngles.x >= maxRotationX) {
-			rotX = maxRotationX;
-		} else if (transform.eulerAngles.x <= -maxRotationX) {
-			rotX = -maxRotationX;
-		} else
+		if (transform.eulerAngles.x >= maxRotationX && transform.eulerAngles.x <= (360 - maxRotationX))
+			rotX = roundExtremeValue (transform.eulerAngles.x, maxRotationX, 360 - maxRotationX);
+		else
 			rotX = transform.eulerAngles.x;
 
-		if (transform.eulerAngles.y >= maxRotationY) {
-			rotY = maxRotationY;
-		} else if (transform.eulerAngles.y <= -maxRotationY) {
-			rotY = -maxRotationY;
-		} else
+		if (transform.eulerAngles.y >= maxRotationY && transform.eulerAngles.y <= (360 - maxRotationY))
+			rotY = roundExtremeValue (transform.eulerAngles.y, maxRotationY, 360 - maxRotationY);
+		else
 			rotY = transform.eulerAngles.y;
 
-		if (transform.eulerAngles.z >= maxRotationZ) {
-			rotZ = maxRotationZ;
-		} else if (transform.eulerAngles.z <= -maxRotationZ) {
-			rotZ = -maxRotationZ;
-		} else
+		if (transform.eulerAngles.z >= maxRotationZ && transform.eulerAngles.z <= (360 - maxRotationZ))
+			rotZ = roundExtremeValue (transform.eulerAngles.z, maxRotationZ, 360 - maxRotationZ);
+		else
 			rotZ = transform.eulerAngles.z;
+	
+		Vector3 rotation = new Vector3 (rotX, rotY, rotZ);
+		transform.eulerAngles = rotation;
+	}
 
-		transform.eulerAngles = new Vector3 (rotX, rotY, rotZ);
+	private float roundExtremeValue(float angle, float min, float max){
+		float diffMin = Mathf.Abs (min - angle);
+		float diffMax = Mathf.Abs (max - angle);
+		return diffMin < diffMax ? min : max;
 	}
 
 

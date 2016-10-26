@@ -23,11 +23,18 @@ public class Interaction : MonoBehaviour {
 	void Start () {
 		forceIndex = ForceManager.GetNextIndex ();
 	}
+
+	void Update(){
+		/*
+		if (!GenericFunctionsClass.GetGrabbed ())
+			ForceManager.StopEnvironmentForce (forceIndex);*/
+	}
 	
 	//Collision detection
 	void OnCollisionEnter(Collision collision){
-
+		
 		if (collision != null) {
+			/*
 			//Haptic properties of the object we are colliding with
 			HapticProperties props = collision.gameObject.transform.FindChild(hapticMeshName).GetComponent<HapticProperties>();
 
@@ -56,7 +63,7 @@ public class Interaction : MonoBehaviour {
 
 			} else
 				ForceManager.StopEnvironmentForce (forceIndex);
-
+			*/
 			if (OnCollision != null)
 				OnCollision ();
 		}
@@ -65,8 +72,11 @@ public class Interaction : MonoBehaviour {
 
 	//Collision leaving
 	void OnCollisionExit(Collision collision){
+		/*
 		ForceManager.StopEnvironmentForce (forceIndex);
+		*/
 		if (ExitCollision != null)
 			ExitCollision ();
+
 	}
 }
