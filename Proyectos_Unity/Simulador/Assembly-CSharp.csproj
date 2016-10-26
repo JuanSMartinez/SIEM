@@ -56,8 +56,8 @@
      <Compile Include="Assets\Scripts\Surgery\Compound Collider\myMeshCut.cs" />
      <Compile Include="Assets\Scripts\Surgery\Simulation\AcnhorMovement.cs" />
      <Compile Include="Assets\Scripts\Surgery\Simulation\Interaction.cs" />
-     <Compile Include="Assets\Scripts\Surgery\Simulation\Joint.cs" />
      <Compile Include="Assets\Scripts\Surgery\Simulation\JointManager.cs" />
+     <Compile Include="Assets\Scripts\Surgery\Simulation\PermanentJoint.cs" />
      <Compile Include="Assets\Scripts\Surgery\Simulation\ReducionTraining.cs" />
      <Compile Include="Assets\Scripts\Surgery\Simulation\SceneSelection.cs" />
      <Compile Include="Assets\Scripts\Surgery\Simulation\UIManager.cs" />

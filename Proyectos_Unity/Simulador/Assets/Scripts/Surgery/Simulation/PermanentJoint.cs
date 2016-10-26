@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Joint : MonoBehaviour {
+public class PermanentJoint : MonoBehaviour {
 
 	public GameObject boundedObject;
 
@@ -16,23 +16,39 @@ public class Joint : MonoBehaviour {
 	public float maxRotationY;
 	public float maxRotationZ;
 
+	//count for average
+	private int count;
+
+	private bool enabled;
+
 	// Use this for initialization
 	void Start () {
 		anchor = boundedObject.transform;
+		enabled = true;
+		count = 0;
 	}
-	
+
+	void OnEnable(){
+		enabled = true;	
+	}
+
+	void OnDisable(){
+		enabled = false;
+	}
+
 	// Update is called once per frame
 	void Update () {
+		anchor = boundedObject.transform;
+		if (enabled) {
+			//Check transaltion
+			CheckTranslation (0, transform.position.x, anchor.position.x, maxX);
+			CheckTranslation (1, transform.position.y, anchor.position.y, maxY);
+			CheckTranslation (2, transform.position.z, anchor.position.z, maxZ);
 
-		//Check transaltion
-		CheckTranslation (0, transform.position.x, anchor.position.x, maxX);
-		CheckTranslation (1, transform.position.y, anchor.position.y, maxY);
-		CheckTranslation (2, transform.position.z, anchor.position.z, maxZ);
-
-		//Check rotation
-		CheckRotation();
-
-	
+			//Check rotation
+			CheckRelativeRotation ();
+		}
+			
 	}
 
 	private void CheckTranslation(int index, float coordinate, float initialCoordinate, float maxDiff){
@@ -58,6 +74,37 @@ public class Joint : MonoBehaviour {
 		}
 	}
 
+
+	private void CheckRelativeRotation(){
+		float rotX;
+		float rotY;
+		float rotZ;
+
+		float diffX = transform.eulerAngles.x - anchor.eulerAngles.x;
+		float diffY = transform.eulerAngles.y - anchor.eulerAngles.y;
+		float diffZ = transform.eulerAngles.z - anchor.eulerAngles.z;
+		Debug.Log ("(" + transform.eulerAngles.y + "," + anchor.eulerAngles.y + ")");
+		if (diffX >= maxRotationX && diffX <= (360 - maxRotationX))
+			rotX = roundExtremeValue (diffX, maxRotationX, 360 - maxRotationX);
+		else
+			rotX = diffX;
+
+		if (diffY >= maxRotationY && diffY <= (360 - maxRotationY))
+			rotY = roundExtremeValue (diffY, maxRotationY, 360 - maxRotationY);
+		else
+			rotY = diffY;
+
+		if (diffZ >= maxRotationZ && diffZ <= (360 - maxRotationZ))
+			rotZ = roundExtremeValue (diffZ, maxRotationZ, 360 - maxRotationZ);
+		else
+			rotZ = diffZ;
+		
+		Vector3 rotation = new Vector3 (transform.eulerAngles.x-rotX, transform.eulerAngles.y-rotY, transform.eulerAngles.z-rotZ);
+		transform.eulerAngles = rotation;
+
+	}
+
+
 	private void CheckRotation(){
 		float rotX;
 		float rotY;
@@ -78,6 +125,7 @@ public class Joint : MonoBehaviour {
 		else
 			rotZ = transform.eulerAngles.z;
 	
+
 		Vector3 rotation = new Vector3 (rotX, rotY, rotZ);
 		transform.eulerAngles = rotation;
 	}

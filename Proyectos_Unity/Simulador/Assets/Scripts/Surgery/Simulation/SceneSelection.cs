@@ -6,13 +6,43 @@ public class SceneSelection : MonoBehaviour {
 	public GameObject esternon;
 	public GameObject acromion;
 
+	public GameObject[] objects;
+	private Transform[] initialTransforms;
+
+	void Start(){
+		initialTransforms = new Transform[objects.Length];
+		for (int i = 0; i < objects.Length; i++) {
+			initialTransforms [i] = objects [i].transform;
+		}
+	}
+
 
 	public void Scene1(){
 		
+		for (int i = 0; i < objects.Length; i++) {
+			DisablePermanentJoints (objects [i]);
+		}
+
+		for (int i = 0; i < objects.Length; i++) {
+			
+			objects [i].transform.position = initialTransforms [i].position;
+			objects [i].transform.eulerAngles = initialTransforms [i].eulerAngles;
+			objects [i].transform.Rotate(new Vector3(0f, 2.5f,0f));
+		
+
+		}
+
+		for (int i = 0; i < objects.Length; i++) {
+
+			EnablePermanentJoints (objects [i]);
+
+		}
+		/**
 		esternon.transform.eulerAngles = new Vector3 (0, 0, 0);
 		acromion.transform.eulerAngles = new Vector3 (0, 0, 0);
 		esternon.transform.Rotate(new Vector3(0f, 2.5f,0f));
-		acromion.transform.Rotate(new Vector3(0f, 2.5f,0f));
+		acromion.transform.Rotate(new Vector3(0f, 2.5f,0f));*/
+
 	}
 
 	public void Scene2(){
@@ -72,4 +102,28 @@ public class SceneSelection : MonoBehaviour {
 		acromion.transform.eulerAngles = new Vector3 (0, 0, 0);
 
 	}
+
+	private void ResetObjects(){
+		for (int i = 0; i < objects.Length; i++) {
+			objects [i].transform.position = initialTransforms [i].position;
+			objects [i].transform.eulerAngles = initialTransforms [i].eulerAngles;
+		}
+	}
+
+	private void DisablePermanentJoints(GameObject obj){
+		PermanentJoint[] joints = obj.GetComponents<PermanentJoint> ();
+		for (int i = 0; i < joints.Length; i++) {
+			joints [i].enabled = false;
+		}
+	}
+
+	private void EnablePermanentJoints(GameObject obj){
+		PermanentJoint[] joints = obj.GetComponents<PermanentJoint> ();
+		for (int i = 0; i < joints.Length; i++) {
+			joints [i].enabled = true;
+		}
+	}
+
+
+
 }
