@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour {
 	public GameObject semaforo;
 	public Material red;
 	public Material green;
+	public UnityEngine.UI.Text type;
 
 	void OnEnable(){
 		Interaction.OnCollision += SignalCollision;
@@ -59,6 +60,14 @@ public class UIManager : MonoBehaviour {
 		float p = decimalNumbers * Mathf.Pow (10f, decimalPlaces);
 		float p2 = (int)p/Mathf.Pow (10f, decimalPlaces);
 		return i + p2;
+	}
+
+	public void ToggleType(){
+		
+		if(type.text.Equals("Anatómica"))
+			type.text = "Funcional";
+		else
+			type.text = "Anatómica";
 	}
 
 
