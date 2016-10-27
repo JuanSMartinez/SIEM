@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class SceneSelection : MonoBehaviour {
 
-	public GameObject esternon;
-	public GameObject acromion;
+
 
 	public string[] objects;
 	private Transform[] initialTransforms;
@@ -23,8 +23,10 @@ public class SceneSelection : MonoBehaviour {
 			GameObject.Find(objects[i]).transform.position = initialTransforms [i].position;
 			GameObject.Find(objects[i]).transform.eulerAngles = initialTransforms [i].eulerAngles;
 			GameObject.Find(objects[i]).transform.Rotate(new Vector3(0f, 2.5f,0f));
+
 		}
 		EnableJoints ();
+
 	}
 
 	public void Scene2(){
@@ -35,6 +37,7 @@ public class SceneSelection : MonoBehaviour {
 			GameObject.Find(objects[i]).transform.Rotate(new Vector3(0f, 5f,0f));
 		}
 		EnableJoints ();
+
 	}
 
 	public void Scene3(){
@@ -96,13 +99,15 @@ public class SceneSelection : MonoBehaviour {
 	}
 
 	public void Reset(){
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		/*
 		DisableJoints ();
 		for (int i = 0; i < objects.Length; i++) {
 			GameObject.Find(objects[i]).transform.position = initialTransforms [i].position;
 			GameObject.Find(objects[i]).transform.eulerAngles = initialTransforms [i].eulerAngles;
 		}
 		EnableJoints ();
-
+		*/
 	}
 
 	private void DisableJoints(){

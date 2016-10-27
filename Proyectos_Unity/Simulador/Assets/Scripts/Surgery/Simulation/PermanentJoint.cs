@@ -85,17 +85,17 @@ public class PermanentJoint : MonoBehaviour {
 		float diffZ = transform.eulerAngles.z - anchor.eulerAngles.z;
 		//Debug.Log ("(" + transform.eulerAngles.y + "," + anchor.eulerAngles.y + ")");
 		if (diffX >= maxRotationX && diffX <= (360 - maxRotationX))
-			rotX = roundExtremeValue (diffX, maxRotationX, 360 - maxRotationX) + transform.eulerAngles.x;
+			rotX = roundExtremeValue (diffX, maxRotationX, 360 - maxRotationX) + anchor.eulerAngles.x;
 		else
 			rotX = transform.eulerAngles.x;
 
 		if (diffY >= maxRotationY && diffY <= (360 - maxRotationY))
-			rotY = roundExtremeValue (diffY, maxRotationY, 360 - maxRotationY) + transform.eulerAngles.y;
+			rotY = roundExtremeValue (diffY, maxRotationY, 360 - maxRotationY) + anchor.eulerAngles.y;
 		else
 			rotY = transform.eulerAngles.y;
 
 		if (diffZ >= maxRotationZ && diffZ <= (360 - maxRotationZ))
-			rotZ = roundExtremeValue (diffZ, maxRotationZ, 360 - maxRotationZ) + transform.eulerAngles.z;
+			rotZ = roundExtremeValue (diffZ, maxRotationZ, 360 - maxRotationZ) + anchor.eulerAngles.z;
 		else
 			rotZ = transform.eulerAngles.z;
 		
