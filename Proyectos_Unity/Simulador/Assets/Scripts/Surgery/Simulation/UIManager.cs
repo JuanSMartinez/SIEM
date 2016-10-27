@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour {
 	public Material red;
 	public Material green;
 	public UnityEngine.UI.Text type;
+	private bool reductiontype;
 
 	void OnEnable(){
 		Interaction.OnCollision += SignalCollision;
@@ -22,7 +23,7 @@ public class UIManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		reductiontype = true;
 	}
 	
 	// Update is called once per frame
@@ -63,8 +64,9 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void ToggleType(){
-		
-		if(type.text.Equals("Anatómica"))
+		reductiontype = !reductiontype;
+
+		if(!reductiontype)
 			type.text = "Funcional";
 		else
 			type.text = "Anatómica";
