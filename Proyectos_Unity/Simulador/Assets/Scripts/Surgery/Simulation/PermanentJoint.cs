@@ -83,23 +83,23 @@ public class PermanentJoint : MonoBehaviour {
 		float diffX = transform.eulerAngles.x - anchor.eulerAngles.x;
 		float diffY = transform.eulerAngles.y - anchor.eulerAngles.y;
 		float diffZ = transform.eulerAngles.z - anchor.eulerAngles.z;
-		Debug.Log ("(" + transform.eulerAngles.y + "," + anchor.eulerAngles.y + ")");
+		//Debug.Log ("(" + transform.eulerAngles.y + "," + anchor.eulerAngles.y + ")");
 		if (diffX >= maxRotationX && diffX <= (360 - maxRotationX))
-			rotX = roundExtremeValue (diffX, maxRotationX, 360 - maxRotationX);
+			rotX = roundExtremeValue (diffX, maxRotationX, 360 - maxRotationX) + transform.eulerAngles.x;
 		else
-			rotX = diffX;
+			rotX = transform.eulerAngles.x;
 
 		if (diffY >= maxRotationY && diffY <= (360 - maxRotationY))
-			rotY = roundExtremeValue (diffY, maxRotationY, 360 - maxRotationY);
+			rotY = roundExtremeValue (diffY, maxRotationY, 360 - maxRotationY) + transform.eulerAngles.y;
 		else
-			rotY = diffY;
+			rotY = transform.eulerAngles.y;
 
 		if (diffZ >= maxRotationZ && diffZ <= (360 - maxRotationZ))
-			rotZ = roundExtremeValue (diffZ, maxRotationZ, 360 - maxRotationZ);
+			rotZ = roundExtremeValue (diffZ, maxRotationZ, 360 - maxRotationZ) + transform.eulerAngles.z;
 		else
-			rotZ = diffZ;
+			rotZ = transform.eulerAngles.z;
 		
-		Vector3 rotation = new Vector3 (transform.eulerAngles.x-rotX, transform.eulerAngles.y-rotY, transform.eulerAngles.z-rotZ);
+		Vector3 rotation = new Vector3 (rotX, rotY, rotZ);
 		transform.eulerAngles = rotation;
 
 	}

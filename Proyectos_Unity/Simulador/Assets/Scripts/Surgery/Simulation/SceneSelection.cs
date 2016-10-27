@@ -6,109 +6,119 @@ public class SceneSelection : MonoBehaviour {
 	public GameObject esternon;
 	public GameObject acromion;
 
-	public GameObject[] objects;
+	public string[] objects;
 	private Transform[] initialTransforms;
 
 	void Start(){
 		initialTransforms = new Transform[objects.Length];
 		for (int i = 0; i < objects.Length; i++) {
-			initialTransforms [i] = objects [i].transform;
+			initialTransforms [i] = GameObject.Find(objects[i]).transform;
 		}
 	}
 
 
 	public void Scene1(){
-		
+		DisableJoints ();
 		for (int i = 0; i < objects.Length; i++) {
-			DisablePermanentJoints (objects [i]);
+			GameObject.Find(objects[i]).transform.position = initialTransforms [i].position;
+			GameObject.Find(objects[i]).transform.eulerAngles = initialTransforms [i].eulerAngles;
+			GameObject.Find(objects[i]).transform.Rotate(new Vector3(0f, 2.5f,0f));
 		}
-
-		for (int i = 0; i < objects.Length; i++) {
-			
-			objects [i].transform.position = initialTransforms [i].position;
-			objects [i].transform.eulerAngles = initialTransforms [i].eulerAngles;
-			objects [i].transform.Rotate(new Vector3(0f, 2.5f,0f));
-		
-
-		}
-
-		for (int i = 0; i < objects.Length; i++) {
-
-			EnablePermanentJoints (objects [i]);
-
-		}
-		/**
-		esternon.transform.eulerAngles = new Vector3 (0, 0, 0);
-		acromion.transform.eulerAngles = new Vector3 (0, 0, 0);
-		esternon.transform.Rotate(new Vector3(0f, 2.5f,0f));
-		acromion.transform.Rotate(new Vector3(0f, 2.5f,0f));*/
-
+		EnableJoints ();
 	}
 
 	public void Scene2(){
-		esternon.transform.eulerAngles = new Vector3 (0, 0, 0);
-		acromion.transform.eulerAngles = new Vector3 (0, 0, 0);
-		esternon.transform.Rotate(new Vector3(0f, 5f,0f));
-		acromion.transform.Rotate(new Vector3(0f, 5f,0f));
+		DisableJoints ();
+		for (int i = 0; i < objects.Length; i++) {
+			GameObject.Find(objects[i]).transform.position = initialTransforms [i].position;
+			GameObject.Find(objects[i]).transform.eulerAngles = initialTransforms [i].eulerAngles;
+			GameObject.Find(objects[i]).transform.Rotate(new Vector3(0f, 5f,0f));
+		}
+		EnableJoints ();
 	}
 
 	public void Scene3(){
-		esternon.transform.eulerAngles = new Vector3 (0, 0, 0);
-		acromion.transform.eulerAngles = new Vector3 (0, 0, 0);
-		esternon.transform.Rotate(new Vector3(0f, 7.5f,0f));
-		acromion.transform.Rotate(new Vector3(0f, 7.5f,0f));
+		DisableJoints ();
+		for (int i = 0; i < objects.Length; i++) {
+			GameObject.Find(objects[i]).transform.position = initialTransforms [i].position;
+			GameObject.Find(objects[i]).transform.eulerAngles = initialTransforms [i].eulerAngles;
+			GameObject.Find(objects[i]).transform.Rotate(new Vector3(0f, 7.5f,0f));
+		}
+		EnableJoints ();
 	}
 
 	public void Scene4(){
-		esternon.transform.eulerAngles = new Vector3 (0, 0, 0);
-		acromion.transform.eulerAngles = new Vector3 (0, 0, 0);
-		esternon.transform.Rotate(new Vector3(0f, 10f,0f));
-		acromion.transform.Rotate(new Vector3(0f, 10f,0f));
+		DisableJoints ();
+		for (int i = 0; i < objects.Length; i++) {
+			GameObject.Find(objects[i]).transform.position = initialTransforms [i].position;
+			GameObject.Find(objects[i]).transform.eulerAngles = initialTransforms [i].eulerAngles;
+			GameObject.Find(objects[i]).transform.Rotate(new Vector3(0f, 10f,0f));
+		}
+		EnableJoints ();
 	}
 
 	public void Scene5(){
-
-		esternon.transform.eulerAngles = new Vector3 (0, 0, 0);
-		acromion.transform.eulerAngles = new Vector3 (0, 0, 0);
-		esternon.transform.Rotate(new Vector3(0f, 0, 1f));
-		acromion.transform.Rotate(new Vector3(0f, 0, 1f));
+		DisableJoints ();
+		for (int i = 0; i < objects.Length; i++) {
+			GameObject.Find(objects[i]).transform.position = initialTransforms [i].position;
+			GameObject.Find(objects[i]).transform.eulerAngles = initialTransforms [i].eulerAngles;
+			GameObject.Find(objects[i]).transform.Rotate(new Vector3(0f, 0, 1f));
+		}
+		EnableJoints ();
 	}
 
 	public void Scene6(){
-
-		esternon.transform.eulerAngles = new Vector3 (0, 0, 0);
-		acromion.transform.eulerAngles = new Vector3 (0, 0, 0);
-		esternon.transform.Rotate(new Vector3(0f, 0, 2f));
-		acromion.transform.Rotate(new Vector3(0f, 0, 2f));
+		DisableJoints ();
+		for (int i = 0; i < objects.Length; i++) {
+			GameObject.Find(objects[i]).transform.position = initialTransforms [i].position;
+			GameObject.Find(objects[i]).transform.eulerAngles = initialTransforms [i].eulerAngles;
+			GameObject.Find(objects[i]).transform.Rotate(new Vector3(0f, 0, 2f));
+		}
+		EnableJoints ();
 	}
 	public void Scene7(){
-
-		esternon.transform.eulerAngles = new Vector3 (0, 0, 0);
-		acromion.transform.eulerAngles = new Vector3 (0, 0, 0);
-		esternon.transform.Rotate(new Vector3(0f, 0, 3f));
-		acromion.transform.Rotate(new Vector3(0f, 0, 3f));
+		DisableJoints ();
+		for (int i = 0; i < objects.Length; i++) {
+			GameObject.Find(objects[i]).transform.position = initialTransforms [i].position;
+			GameObject.Find(objects[i]).transform.eulerAngles = initialTransforms [i].eulerAngles;
+			GameObject.Find(objects[i]).transform.Rotate(new Vector3(0f, 0, 3f));
+		}
+		EnableJoints ();
 	}
 	public void Scene8(){
-
-		esternon.transform.eulerAngles = new Vector3 (0, 0, 0);
-		acromion.transform.eulerAngles = new Vector3 (0, 0, 0);
-		esternon.transform.Rotate(new Vector3(0f, 0, 4f));
-		acromion.transform.Rotate(new Vector3(0f, 0, 4f));
+		DisableJoints ();
+		for (int i = 0; i < objects.Length; i++) {
+			GameObject.Find(objects[i]).transform.position = initialTransforms [i].position;
+			GameObject.Find(objects[i]).transform.eulerAngles = initialTransforms [i].eulerAngles;
+			GameObject.Find(objects[i]).transform.Rotate(new Vector3(0f, 0, 4f));
+		}
+		EnableJoints ();
 	}
 
 	public void Reset(){
-
-		esternon.transform.eulerAngles = new Vector3 (0, 0, 0);
-		acromion.transform.eulerAngles = new Vector3 (0, 0, 0);
+		DisableJoints ();
+		for (int i = 0; i < objects.Length; i++) {
+			GameObject.Find(objects[i]).transform.position = initialTransforms [i].position;
+			GameObject.Find(objects[i]).transform.eulerAngles = initialTransforms [i].eulerAngles;
+		}
+		EnableJoints ();
 
 	}
 
-	private void ResetObjects(){
+	private void DisableJoints(){
 		for (int i = 0; i < objects.Length; i++) {
-			objects [i].transform.position = initialTransforms [i].position;
-			objects [i].transform.eulerAngles = initialTransforms [i].eulerAngles;
+			DisablePermanentJoints (GameObject.Find(objects[i]));
 		}
 	}
+
+	private void EnableJoints(){
+		for (int i = 0; i < objects.Length; i++) {
+
+			EnablePermanentJoints (GameObject.Find(objects[i]));
+
+		}
+	}
+		
 
 	private void DisablePermanentJoints(GameObject obj){
 		PermanentJoint[] joints = obj.GetComponents<PermanentJoint> ();
