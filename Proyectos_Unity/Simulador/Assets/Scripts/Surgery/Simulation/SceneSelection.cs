@@ -100,14 +100,6 @@ public class SceneSelection : MonoBehaviour {
 
 	public void Reset(){
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-		/*
-		DisableJoints ();
-		for (int i = 0; i < objects.Length; i++) {
-			GameObject.Find(objects[i]).transform.position = initialTransforms [i].position;
-			GameObject.Find(objects[i]).transform.eulerAngles = initialTransforms [i].eulerAngles;
-		}
-		EnableJoints ();
-		*/
 	}
 
 	private void DisableJoints(){
