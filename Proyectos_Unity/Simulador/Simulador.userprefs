@@ -1,11 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Surgery\Simulation\ReducionTraining.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Surgery/Simulation/UIManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\Surgery\Simulation\PermanentJoint.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Surgery\Simulation\SceneSelection.cs" Line="20" Column="23" />
-      <File FileName="Assets\Scripts\Surgery\Simulation\UIManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Surgery\Simulation\ReducionTraining.cs" Line="33" Column="1" />
+      <File FileName="Assets/Scripts/Haptics/GenericFunctionsClass.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Haptics/HapticClassScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Haptics/PluginImport.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Surgery/Simulation/UIManager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
