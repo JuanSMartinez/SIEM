@@ -254,7 +254,7 @@ public class HapticManager: MonoBehaviour{
 
 		//If in Manipulation Mode enable the manipulation of the selected object
 
-		if(PluginImport.GetButton1State())
+		if(PluginImport.GetButton2State())
 		{
 			if(clickCount == 0)
 			{

@@ -74,7 +74,7 @@ public class HapticSpace : MonoBehaviour {
 
 		hapticManager.GetProxyValues();
 
-		//myGenericFunctionsClassScript.GetTouchedObject();
+		//Move object with the cursor;
 		hapticManager.manipulateObject ();
 	}
 

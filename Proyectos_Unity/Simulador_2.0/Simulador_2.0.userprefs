@@ -1,12 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Simulation/Model/HapticSpace.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Simulation\Model\DynamicJoint.cs">
     <Files>
-      <File FileName="Assets/Scripts/Simulation/Model/HapticSpace.cs" Line="12" Column="37" />
-      <File FileName="Assets/Scripts/Haptics/HapticManager.cs" Line="15" Column="32" />
-      <File FileName="Assets/Scripts/Haptics/ForceManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Simulation/Model/DynamicJoint.cs" Line="52" Column="32" />
-      <File FileName="Assets/Scripts/Simulation/Model/PermanentJoint.cs" Line="19" Column="37" />
+      <File FileName="Assets\Scripts\Simulation\Model\HapticSpace.cs" Line="77" Column="32" />
+      <File FileName="Assets\Scripts\Haptics\HapticManager.cs" Line="263" Column="5" />
+      <File FileName="Assets\Scripts\Haptics\ForceManager.cs" Line="46" Column="35" />
+      <File FileName="Assets\Scripts\Simulation\Model\DynamicJoint.cs" Line="49" Column="3" />
+      <File FileName="Assets\Scripts\Simulation\Model\PermanentJoint.cs" Line="80" Column="6" />
+      <File FileName="Assets\Scripts\Simulation\Compound Collider\CompoundCollider.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

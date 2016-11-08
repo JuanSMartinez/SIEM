@@ -3,10 +3,32 @@ using System.Collections;
 
 public class PermanentJoint : MonoBehaviour {
 
+	//Calibartion offset
+	public Vector3 offset = new Vector3 (-0.02f, -0.75f, -0.6f);
+
+	//Bounded object that holds the anchor point
 	public GameObject boundedObject;
+
+	//Type of force, defined as a constant of ForceManager
+	public string forceType = ForceManager.SPRING;
+
+	//Name of haptic element as a child or the game object itself
+	public string touchableName;
+
+	//Force gain
+	public float gain = 0.2f;
+
+	//Force magnitude
+	public float magnitude = 0.7f;
+
+	//Force index, obtained as a sequential index from ForceManager
+	private int forceIndex;
 
 	//Anchor point
 	private Transform anchor;
+
+	//Cursor that feels the force of collisions
+	public GameObject cursor;
 
 	//Limits in unity units and in degrees
 	public float maxX;
@@ -19,10 +41,16 @@ public class PermanentJoint : MonoBehaviour {
 	//Dtermines if the joint is enabled
 	private bool jointEnabled;
 
+	//Indicator to tell that the force started
+	private bool forceStarted;
+
+
 	// Use this for initialization
 	void Start () {
 		anchor = boundedObject.transform;
+		forceIndex = ForceManager.GetNextIndex ();
 		jointEnabled = true;
+		forceStarted = false;
 	}
 
 	void OnEnable(){
@@ -44,6 +72,30 @@ public class PermanentJoint : MonoBehaviour {
 
 			//Check rotation
 			CheckRelativeRotation ();
+
+			if (HapticManager.GetGrabbed () != null && HapticManager.GetGrabbed ().name.Equals (touchableName) && !forceStarted) {
+
+				//Scale position to workspace relative position and mm dimensions for spring forces
+				float multiplier = (162.56f/4f);
+				 
+				Vector3 springPosition = (anchor.position - offset) * multiplier;
+
+				Vector3 pos = forceType.Equals (ForceManager.SPRING) ? springPosition : anchor.position;
+
+				//Set anchor point and direction effect 
+				float[] position = new float[] { pos.x, pos.y, pos.z };
+				float[] direction = new float[]{ -cursor.transform.position.x, -cursor.transform.position.y, -cursor.transform.position.z };
+
+				//Start the force
+				ForceManager.SetEnvironmentForce (forceType, forceIndex, position, direction, gain, magnitude, 0, 0);
+				forceStarted = true;
+			}
+
+			if (HapticManager.GetGrabbed () == null) {
+				ForceManager.StopEnvironmentForce (forceIndex);
+				forceStarted = false;
+			}
+
 		}
 			
 	}
