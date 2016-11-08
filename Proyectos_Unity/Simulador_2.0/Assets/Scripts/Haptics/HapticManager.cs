@@ -305,5 +305,20 @@ public class HapticManager: MonoBehaviour{
 		return manipObj;
 	}
 
+	/*********************************************************************************************
+	//Manipulate an object as a response to a collision
+	/********************************************************************************************/
+
+	void OnCollisionEnter(Collision collision){
+		//manipulateObject ();
+	}
+	void OnCollisionStay(Collision collisionInfo){
+		//manipulateObject ();
+	}
+	void OnCollisionExit(Collision collision){
+		//manipulateObject ();
+	}
+
+
 
 }
