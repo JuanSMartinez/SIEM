@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class HapticSpace : MonoBehaviour {
 
@@ -11,20 +12,6 @@ public class HapticSpace : MonoBehaviour {
 	public GameObject hapticCursor;
 	public HapticManager hapticManager;
 
-	/*
-	 * Final positions of fragments
-	 * */
-	public Transform[] finalPositions;
-
-	/**
-	 * Names of final positions
-	 */
-	public string[] finalPositionsNames;
-
-	/**
-	 * Option for assistance to final positions
-	 */
-	public bool guides;
 
 	void Start(){
 		if (PluginImport.InitHapticDevice ()) {
@@ -63,19 +50,26 @@ public class HapticSpace : MonoBehaviour {
 
 	void Update()
 	{
-		//Update Workspace as function of camera
-		PluginImport.UpdateWorkspace(myHapticCamera.transform.rotation.eulerAngles.y);
+		try{
+			//Update Workspace as function of camera
+			PluginImport.UpdateWorkspace(myHapticCamera.transform.rotation.eulerAngles.y);
 
-		//Update cube workspace
-		hapticManager.UpdateGraphicalWorkspace();
+			//Update cube workspace
+			hapticManager.UpdateGraphicalWorkspace();
 
-		//Haptic Rendering Loop
-		PluginImport.RenderHaptic ();
+			//Haptic Rendering Loop
+			PluginImport.RenderHaptic ();
 
-		hapticManager.GetProxyValues();
+			hapticManager.GetProxyValues();
 
-		//Move object with the cursor;
-		hapticManager.manipulateObject ();
+			//Move object with the cursor;
+			hapticManager.manipulateObject ();
+		}
+		catch(Exception){
+			Debug.Log ("Exception in main loop");
+			PluginImport.HapticCleanUp ();
+		}
+
 	}
 
 	void GenerateGuides(){

@@ -53,8 +53,10 @@
      <Compile Include="Assets\Scripts\Simulation\Compound Collider\CompoundCollider.cs" />
      <Compile Include="Assets\Scripts\Simulation\Compound Collider\Mesh_Maker.cs" />
      <Compile Include="Assets\Scripts\Simulation\Compound Collider\myMeshCut.cs" />
+     <Compile Include="Assets\Scripts\Simulation\Model\CursorJoint.cs" />
      <Compile Include="Assets\Scripts\Simulation\Model\DynamicJoint.cs" />
      <Compile Include="Assets\Scripts\Simulation\Model\HapticSpace.cs" />
+     <Compile Include="Assets\Scripts\Simulation\Model\Monitor.cs" />
      <Compile Include="Assets\Scripts\Simulation\Model\PermanentJoint.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

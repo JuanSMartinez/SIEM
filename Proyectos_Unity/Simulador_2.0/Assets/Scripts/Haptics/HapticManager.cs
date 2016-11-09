@@ -262,7 +262,7 @@ public class HapticManager: MonoBehaviour{
 				manipObj = GameObject.Find (myObjStringName);
 
 				//Setup Manipulated object Hierarchy as a child of haptic cursor - Only if object is declared as Manipulable object
-				if(manipObj != null && !PluginImport.IsFixed(PluginImport.GetManipulatedObjectId()))
+				if(manipObj != null && !manipObj.GetComponent<HapticProperties>().fixedObj)
 				{
 					//Store the Previous parent object that is higher in the hierarchy
 					prevParent = manipObj.transform.parent.parent;
@@ -304,21 +304,6 @@ public class HapticManager: MonoBehaviour{
 	public static GameObject GetGrabbed(){
 		return manipObj;
 	}
-
-	/*********************************************************************************************
-	//Manipulate an object as a response to a collision
-	/********************************************************************************************/
-
-	void OnCollisionEnter(Collision collision){
-		//manipulateObject ();
-	}
-	void OnCollisionStay(Collision collisionInfo){
-		//manipulateObject ();
-	}
-	void OnCollisionExit(Collision collision){
-		//manipulateObject ();
-	}
-
 
 
 }

@@ -38,9 +38,6 @@ public class PermanentJoint : MonoBehaviour {
 	public float maxRotationY;
 	public float maxRotationZ;
 
-	//Dtermines if the joint is enabled
-	private bool jointEnabled;
-
 	//Indicator to tell that the force started
 	private bool forceStarted;
 
@@ -49,22 +46,15 @@ public class PermanentJoint : MonoBehaviour {
 	void Start () {
 		anchor = boundedObject.transform;
 		forceIndex = ForceManager.GetNextIndex ();
-		jointEnabled = true;
+		//Debug.Log ("Force index " + forceIndex + " given to permanent joint for "+forceType+ " in " + gameObject.name + " game object");
 		forceStarted = false;
 	}
 
-	void OnEnable(){
-		jointEnabled = true;	
-	}
-
-	void OnDisable(){
-		jointEnabled = false;
-	}
 
 	// Update is called once per frame
 	void Update () {
 		anchor = boundedObject.transform;
-		if (jointEnabled) {
+		if (enabled) {
 			//Check transaltion
 			CheckTranslation (0, transform.position.x, anchor.position.x, maxX);
 			CheckTranslation (1, transform.position.y, anchor.position.y, maxY);

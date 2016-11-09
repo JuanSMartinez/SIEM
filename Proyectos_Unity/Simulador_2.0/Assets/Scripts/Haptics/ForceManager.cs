@@ -42,13 +42,23 @@ public class ForceManager : MonoBehaviour {
 		IntPtr direction = ConverterClass.ConvertFloat3ToIntPtr(directionEffect);
 
 		//Set the effect
-		PluginImport.SetEffect(type, index, gain, magnitude, duration, frequency, position, direction);
-		PluginImport.StartEffect(index);
+		try{
+			PluginImport.SetEffect(type, index, gain, magnitude, duration, frequency, position, direction);
+			PluginImport.StartEffect(index);
+		}
+		catch(Exception){
+			Debug.Log ("Crashed setting "+ nType +" force with index " + index);
+		}
 	}
 
 	//Stop a force
 	public static void StopEnvironmentForce(int index){
-		PluginImport.StopEffect (index);
+		try{
+			PluginImport.StopEffect (index);
+		}
+		catch(Exception){
+			Debug.Log ("Crashed stopping force with index " + index);
+		}
 	}
 
 	//Return next free index for a force
