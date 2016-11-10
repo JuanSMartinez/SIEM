@@ -90,4 +90,14 @@ public class Monitor : MonoBehaviour {
 
 		return new Vector3 (xdiff, ydiff, zdiff);
 	}
+
+	//change state of the boolean control for the position guides
+	public void ChangePositionGuides(bool state){
+		positionGuides = state;
+	}
+
+	//Change state of the boolean control for the collision guides
+	public void ChangeCollisionGuides(bool state){
+		collisionGuides = state;
+	}
 }
