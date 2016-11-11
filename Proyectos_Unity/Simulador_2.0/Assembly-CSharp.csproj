@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Simulation\Model\CursorJointRaycast.cs" />
      <Compile Include="Assets\Scripts\Simulation\Model\DynamicJoint.cs" />
      <Compile Include="Assets\Scripts\Simulation\Model\HapticSpace.cs" />
+     <Compile Include="Assets\Scripts\Simulation\Model\MainMenu.cs" />
      <Compile Include="Assets\Scripts\Simulation\Model\Monitor.cs" />
      <Compile Include="Assets\Scripts\Simulation\Model\PermanentJoint.cs" />
      <Compile Include="Assets\Scripts\Simulation\Model\UIManager.cs" />
