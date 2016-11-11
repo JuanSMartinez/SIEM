@@ -14,8 +14,9 @@ public class CursorJointRaycast : MonoBehaviour {
 		if (enabled) {
 			joint = gameObject.AddComponent<SpringJoint> ();
 			joint.autoConfigureConnectedAnchor = true;
-			joint.spring = 200f;
-			joint.damper = 0.2f;
+			joint.enableCollision = true;
+			joint.spring = 500f;
+			joint.damper = 1f;
 			joint.maxDistance = 0.5f;
 			joint.minDistance = 0;
 		}
@@ -28,7 +29,6 @@ public class CursorJointRaycast : MonoBehaviour {
 		Ray ray = new Ray (gameObject.transform.position, gameObject.transform.forward);
 		if (enabled) {
 			if (Physics.Raycast (ray, out hit, distance)) {
-				//Debug.Log ("Hit");
 				GameObject objHit = hit.collider.gameObject;
 				joint.connectedBody = objHit.GetComponentInParent<Rigidbody>();
 				joint.anchor = gameObject.transform.position;
