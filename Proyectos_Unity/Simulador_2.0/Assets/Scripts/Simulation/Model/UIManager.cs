@@ -11,6 +11,9 @@ public class UIManager : MonoBehaviour {
 	//Reference to the scene monitor
 	public Monitor monitor;
 
+	//Reference to the slider to choose the reduction type
+	public Slider slider;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -42,7 +45,8 @@ public class UIManager : MonoBehaviour {
 		finalLabel.text = "ENTRENAMIENTO INICIADO";
 		Color color = new Color (0f, 0f, 0f, 255f);
 		finalLabel.color = color;
-		monitor.SendMessage ("CreateLog");
+		string reduction = slider.value == 0 ? "Anatomica" : "Funcional";
+		monitor.SendMessage ("CreateLog", reduction);
 		monitor.start = true;
 
 

@@ -165,7 +165,7 @@ public class Monitor : MonoBehaviour {
 	}
 
 	//Create the log file to track movements
-	public void CreateLog(){
+	public void CreateLog(string reduction){
 		if (positions_log == null) {
 
 			if (File.Exists (POSITION_FILE_BASE + SceneManager.GetActiveScene ().name + ".txt")) {
@@ -174,6 +174,7 @@ public class Monitor : MonoBehaviour {
 
 			positions_log = File.CreateText (POSITION_FILE_BASE + SceneManager.GetActiveScene ().name + ".txt");
 			positions_log.WriteLine ("Tracking de posiciones para la escena " + SceneManager.GetActiveScene ().name);
+			positions_log.WriteLine ("Reduccion:" + reduction);
 		} else
 			canvas.SendMessage ("TrainingRunning");
 	}
