@@ -26,27 +26,72 @@ public class UIManager : MonoBehaviour {
 		finalLabel.text = "ENTRENAMIENTO COMPLETADO!";
 		Color color = new Color (0f, 208f, 0f, 255f);
 		finalLabel.color = color;
+		monitor.SendMessage ("CloseFile");
+		monitor.start = false;
 	}
 
 	//Reset the scene
 	public void Reset(){
-		monitor.start = false;
 		monitor.SendMessage ("CloseFile");
+		monitor.start = false;
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
 	}
 
 	//Start training
 	public void StartTraining(){
 		finalLabel.text = "ENTRENAMIENTO INICIADO";
-		monitor.start = true;
+		Color color = new Color (0f, 0f, 0f, 255f);
+		finalLabel.color = color;
 		monitor.SendMessage ("CreateLog");
+		monitor.start = true;
 
+
+	}
+
+	//Pause the training
+	public void PauseTraining(){
+		monitor.start = false;
+		finalLabel.text = "ENTRENAMIENTO SUSPENDIDO";
+		Color color = new Color (0f, 0f, 0f, 255f);
+		finalLabel.color = color;
+		Time.timeScale = 0;
 	}
 
 	//Stop the training
 	public void StopTraining(){
-		monitor.start = false;
 		monitor.SendMessage ("CloseFile");
-		finalLabel.text = "ENTRENAMIENTO DETENIDO";
+		monitor.start = false;
+		finalLabel.text = "ENTRENAMIENTO FINALIZADO";
+		Color color = new Color (0f, 0f, 0f, 255f);
+		finalLabel.color = color;
 	}
+
+	//Go back to the main menu
+	public void MainMenu(){
+		monitor.SendMessage ("CloseFile");
+		monitor.start = false;
+		SceneManager.LoadScene("MainMenu");
+	}
+
+	//Resume training
+	public void ResumeTraining(){
+		monitor.start = true;
+		finalLabel.text = "ENTRENAMIENTO REANUDADO";
+		Color color = new Color (0f, 0f, 0f, 255f);
+		finalLabel.color = color;
+		Time.timeScale = 1;
+	}
+
+	public void TrainingNotStarted(){
+		finalLabel.text = "ENTRENAMIENTO NO INICIADO";
+		Color color = new Color (0f, 0f, 0f, 255f);
+		finalLabel.color = color;
+	}
+
+	public void TrainingRunning(){
+		finalLabel.text = "ENTRENAMIENTO YA INICIADO";
+		Color color = new Color (0f, 0f, 0f, 255f);
+		finalLabel.color = color;
+	}
+
 }

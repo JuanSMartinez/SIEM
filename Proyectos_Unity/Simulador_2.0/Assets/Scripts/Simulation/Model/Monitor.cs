@@ -38,13 +38,12 @@ public class Monitor : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		CreateLog ();
 		start = false;
 	}
 
 	void OnDisable()
 	{
-		CloseFile ();
+		//CloseFile ();
 	}
 	
 	// Update is called once per frame
@@ -142,11 +141,15 @@ public class Monitor : MonoBehaviour {
 			float overalAngleDiff = GetOverallAngleDiff(obj, target); 
 
 			//Log differences
-			positions_log.WriteLine(obj.name + ","+
-				vectorDistanceDiff.x + "," + vectorDistanceDiff.y + "," + vectorDistanceDiff.z + ","+
+			if (positions_log == null)
+				canvas.SendMessage ("TrainingNotStarted");
+			else {
+				positions_log.WriteLine (obj.name + "," +
+				vectorDistanceDiff.x + "," + vectorDistanceDiff.y + "," + vectorDistanceDiff.z + "," +
 				overalDistanceDiff + "," +
-				vectorAngleDiff.x + "," + vectorAngleDiff.y + "," + vectorAngleDiff.z + ","+
+				vectorAngleDiff.x + "," + vectorAngleDiff.y + "," + vectorAngleDiff.z + "," +
 				overalAngleDiff);
+			}
 
 			//Check object if correctly positioned
 			if (overalAngleDiff <= angularTolerance && overalDistanceDiff <= linearTolerance)
@@ -160,15 +163,25 @@ public class Monitor : MonoBehaviour {
 
 	//Create the log file to track movements
 	public void CreateLog(){
-		if (File.Exists (POSITION_FILE_BASE + SceneManager.GetActiveScene ().name + ".txt")) {
-			File.Delete (POSITION_FILE_BASE + SceneManager.GetActiveScene ().name + ".txt");
-		}
-		positions_log = File.CreateText (POSITION_FILE_BASE + SceneManager.GetActiveScene ().name + ".txt");
-		positions_log.WriteLine ("Tracking de posiciones para la escena " + SceneManager.GetActiveScene ().name);
+		if (positions_log == null) {
+
+			if (File.Exists (POSITION_FILE_BASE + SceneManager.GetActiveScene ().name + ".txt")) {
+				File.Delete (POSITION_FILE_BASE + SceneManager.GetActiveScene ().name + ".txt");
+			}
+
+			positions_log = File.CreateText (POSITION_FILE_BASE + SceneManager.GetActiveScene ().name + ".txt");
+			positions_log.WriteLine ("Tracking de posiciones para la escena " + SceneManager.GetActiveScene ().name);
+		} else
+			canvas.SendMessage ("TrainingRunning");
 	}
 
 	//Close stream to the log file
 	public void CloseFile(){
-		positions_log.Close ();
+		if (positions_log == null)
+			canvas.SendMessage ("TrainingNotStarted");
+		else {
+			positions_log.Close ();
+			positions_log = null;
+		}
 	}
 }
