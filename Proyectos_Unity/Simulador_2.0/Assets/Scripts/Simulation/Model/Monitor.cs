@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using UnityEngine.SceneManagement;
 
 public class Monitor : MonoBehaviour {
+
+	//path to log of position movement
+	private static string POSITION_FILE_BASE = "Logs/";
 
 	//control for final position guides
 	public bool positionGuides = false;
@@ -22,9 +27,24 @@ public class Monitor : MonoBehaviour {
 	//Angular tolerance
 	public float angularTolerance;
 
+	//Log file for movement tracking
+	private StreamWriter positions_log;
+
+	//Canvas
+	public UIManager canvas;
+
+	//Boolean control to tell if the training has started
+	public bool start;
+
 	// Use this for initialization
 	void Start () {
-		
+		CreateLog ();
+		start = false;
+	}
+
+	void OnDisable()
+	{
+		CloseFile ();
 	}
 	
 	// Update is called once per frame
@@ -34,8 +54,8 @@ public class Monitor : MonoBehaviour {
 		ShowFinalGuides();
 
 		//Log position differences
-
-		//Log angular differences
+		if(start)
+			TrackMovements();
 	}
 
 	//Show final positions if the guide options is enabled
@@ -99,5 +119,56 @@ public class Monitor : MonoBehaviour {
 	//Change state of the boolean control for the collision guides
 	public void ChangeCollisionGuides(bool state){
 		collisionGuides = state;
+	}
+
+	//Log position differences 
+	private void TrackMovements(){
+		int positionedObjects = 0;
+		//Loop through all tracked game objects
+		for(int i = 0; i < objects.Length; i++){
+			GameObject obj = objects[i];
+			GameObject target = finalObjects[i];
+
+			//Get individual coordinate linear differences
+			Vector3 vectorDistanceDiff = GetCoordinateDistanceDiff(obj, target);
+
+			//Get overal linear difference
+			float overalDistanceDiff = GetOverallDistanceDiff(obj, target);
+
+			//Get individual coordinate linear differences
+			Vector3 vectorAngleDiff = GetCoordinateAngleDiff(obj, target);
+
+			//Get overal linear difference
+			float overalAngleDiff = GetOverallAngleDiff(obj, target); 
+
+			//Log differences
+			positions_log.WriteLine(obj.name + ","+
+				vectorDistanceDiff.x + "," + vectorDistanceDiff.y + "," + vectorDistanceDiff.z + ","+
+				overalDistanceDiff + "," +
+				vectorAngleDiff.x + "," + vectorAngleDiff.y + "," + vectorAngleDiff.z + ","+
+				overalAngleDiff);
+
+			//Check object if correctly positioned
+			if (overalAngleDiff <= angularTolerance && overalDistanceDiff <= linearTolerance)
+				positionedObjects += 1;
+		}
+
+		if (positionedObjects == objects.Length)
+			canvas.SendMessage ("Finished");
+
+	}
+
+	//Create the log file to track movements
+	public void CreateLog(){
+		if (File.Exists (POSITION_FILE_BASE + SceneManager.GetActiveScene ().name + ".txt")) {
+			File.Delete (POSITION_FILE_BASE + SceneManager.GetActiveScene ().name + ".txt");
+		}
+		positions_log = File.CreateText (POSITION_FILE_BASE + SceneManager.GetActiveScene ().name + ".txt");
+		positions_log.WriteLine ("Tracking de posiciones para la escena " + SceneManager.GetActiveScene ().name);
+	}
+
+	//Close stream to the log file
+	public void CloseFile(){
+		positions_log.Close ();
 	}
 }

@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\Simulation\Model\HapticSpace.cs" />
      <Compile Include="Assets\Scripts\Simulation\Model\Monitor.cs" />
      <Compile Include="Assets\Scripts\Simulation\Model\PermanentJoint.cs" />
+     <Compile Include="Assets\Scripts\Simulation\Model\UIManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
