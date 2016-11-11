@@ -28,7 +28,7 @@ public class CursorJointRaycast : MonoBehaviour {
 		Ray ray = new Ray (gameObject.transform.position, gameObject.transform.forward);
 		if (enabled) {
 			if (Physics.Raycast (ray, out hit, distance)) {
-				Debug.Log ("Hit");
+				//Debug.Log ("Hit");
 				GameObject objHit = hit.collider.gameObject;
 				joint.connectedBody = objHit.GetComponentInParent<Rigidbody>();
 				joint.anchor = gameObject.transform.position;

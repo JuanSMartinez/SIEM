@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Monitor : MonoBehaviour {
 
 	//path to log of position movement
-	private static string POSITION_FILE_BASE = "Logs/";
+	private static string POSITION_FILE_BASE;
 
 	//control for final position guides
 	public bool positionGuides = false;
@@ -39,11 +39,13 @@ public class Monitor : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		start = false;
+		POSITION_FILE_BASE = Application.dataPath;
+		positions_log = null;
 	}
 
 	void OnDisable()
 	{
-		//CloseFile ();
+		
 	}
 	
 	// Update is called once per frame
@@ -59,6 +61,7 @@ public class Monitor : MonoBehaviour {
 
 	//Show final positions if the guide options is enabled
 	private void ShowFinalGuides(){
+		
 		for (int i = 0; i < finalObjects.Length; i++) {
 			GameObject obj = finalObjects [i];
 			obj.transform.GetComponentInChildren<MeshRenderer> ().enabled = positionGuides;
