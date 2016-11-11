@@ -28,4 +28,9 @@ public class MainMenu : MonoBehaviour {
 	public void Advanced(){
 		SceneManager.LoadScene ("Avanzado");
 	}
+
+	//Load master level
+	public void AdvancedMaster(){
+		SceneManager.LoadScene ("AvanzadoCloth");
+	}
 }
