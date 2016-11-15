@@ -72,9 +72,7 @@ public class HapticSpace : MonoBehaviour {
 
 	}
 
-	void GenerateGuides(){
 
-	}
 
 
 

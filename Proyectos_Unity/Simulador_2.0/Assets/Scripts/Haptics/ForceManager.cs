@@ -33,31 +33,35 @@ public class ForceManager : MonoBehaviour {
 	//Start a force
 	public static void SetEnvironmentForce(string nType, int index, float[] positionEffect, float[] directionEffect, float gain, float magnitude, float duration, float frequency)
 	{
-		
-		//convert String to IntPtr
-		IntPtr type = ConverterClass.ConvertStringToByteToIntPtr(nType);
-		//Convert float[3] to intptr
-		IntPtr position = ConverterClass.ConvertFloat3ToIntPtr(positionEffect);
-		//Convert float[3] to intptr
-		IntPtr direction = ConverterClass.ConvertFloat3ToIntPtr(directionEffect);
+		lock (obj) {
+			//convert String to IntPtr
+			IntPtr type = ConverterClass.ConvertStringToByteToIntPtr (nType);
+			//Convert float[3] to intptr
+			IntPtr position = ConverterClass.ConvertFloat3ToIntPtr (positionEffect);
+			//Convert float[3] to intptr
+			IntPtr direction = ConverterClass.ConvertFloat3ToIntPtr (directionEffect);
 
-		//Set the effect
-		try{
-			PluginImport.SetEffect(type, index, gain, magnitude, duration, frequency, position, direction);
-			PluginImport.StartEffect(index);
-		}
-		catch(Exception){
-			Debug.Log ("Crashed setting "+ nType +" force with index " + index);
+			//Set the effect
+			try {
+				for(int i = 0 ; i <= index; i++)
+					PluginImport.SetEffect (type, index, gain, magnitude, duration, frequency, position, direction);
+				PluginImport.StartEffect (index);
+				Debug.Log ("Started " + nType + " force with index " + index);
+			} catch (Exception) {
+				Debug.Log ("Crashed setting " + nType + " force with index " + index);
+			}
 		}
 	}
 
 	//Stop a force
 	public static void StopEnvironmentForce(int index){
-		try{
-			PluginImport.StopEffect (index);
-		}
-		catch(Exception){
-			Debug.Log ("Crashed stopping force with index " + index);
+		lock (obj) {
+			try {
+				PluginImport.StopEffect (index);
+				Debug.Log ("Stopped force with index " + index);
+			} catch (Exception) {
+				Debug.Log ("Crashed stopping force with index " + index);
+			}
 		}
 	}
 

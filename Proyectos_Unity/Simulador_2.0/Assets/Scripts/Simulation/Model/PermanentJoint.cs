@@ -50,7 +50,7 @@ public class PermanentJoint : MonoBehaviour {
 		forceStarted = false;
 	}
 
-
+		
 	// Update is called once per frame
 	void Update () {
 		anchor = boundedObject.transform;
@@ -81,7 +81,7 @@ public class PermanentJoint : MonoBehaviour {
 				forceStarted = true;
 			}
 
-			if (HapticManager.GetGrabbed () == null) {
+			if (HapticManager.GetGrabbed () == null && forceStarted) {
 				ForceManager.StopEnvironmentForce (forceIndex);
 				forceStarted = false;
 			}
