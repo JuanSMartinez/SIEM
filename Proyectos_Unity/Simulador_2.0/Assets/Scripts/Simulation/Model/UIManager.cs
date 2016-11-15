@@ -37,6 +37,7 @@ public class UIManager : MonoBehaviour {
 	public void Reset(){
 		monitor.SendMessage ("CloseFile");
 		monitor.start = false;
+		ForceManager.ResetIndex ();
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
 	}
 
@@ -74,6 +75,7 @@ public class UIManager : MonoBehaviour {
 	public void MainMenu(){
 		monitor.SendMessage ("CloseFile");
 		monitor.start = false;
+		ForceManager.ResetIndex ();
 		SceneManager.LoadScene("MainMenu");
 	}
 

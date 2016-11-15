@@ -46,7 +46,6 @@ public class ForceManager : MonoBehaviour {
 				for(int i = 0 ; i <= index; i++)
 					PluginImport.SetEffect (type, index, gain, magnitude, duration, frequency, position, direction);
 				PluginImport.StartEffect (index);
-				Debug.Log ("Started " + nType + " force with index " + index);
 			} catch (Exception) {
 				Debug.Log ("Crashed setting " + nType + " force with index " + index);
 			}
@@ -58,7 +57,6 @@ public class ForceManager : MonoBehaviour {
 		lock (obj) {
 			try {
 				PluginImport.StopEffect (index);
-				Debug.Log ("Stopped force with index " + index);
 			} catch (Exception) {
 				Debug.Log ("Crashed stopping force with index " + index);
 			}
@@ -72,6 +70,14 @@ public class ForceManager : MonoBehaviour {
 			return global_index;
 		}
 	}
+
+	//Reset global index
+	public static void ResetIndex(){
+		lock (obj) {
+			global_index = -1;
+		}
+	}
+
 
 
 

@@ -175,6 +175,7 @@ public class Monitor : MonoBehaviour {
 			positions_log = File.CreateText (POSITION_FILE_BASE + SceneManager.GetActiveScene ().name + ".txt");
 			positions_log.WriteLine ("Tracking de posiciones para la escena " + SceneManager.GetActiveScene ().name);
 			positions_log.WriteLine ("Reduccion:" + reduction);
+			positions_log.WriteLine ("Tiempo de inicio (s): " + Time.time);
 		} else
 			canvas.SendMessage ("TrainingRunning");
 	}
@@ -184,6 +185,7 @@ public class Monitor : MonoBehaviour {
 		if (positions_log == null)
 			canvas.SendMessage ("TrainingNotStarted");
 		else {
+			positions_log.WriteLine ("Tiempo de finalizacion (s): " + Time.time);
 			positions_log.Close ();
 			positions_log = null;
 		}
