@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\Simulation\Compound Collider\CompoundCollider.cs" />
      <Compile Include="Assets\Scripts\Simulation\Compound Collider\Mesh_Maker.cs" />
      <Compile Include="Assets\Scripts\Simulation\Compound Collider\myMeshCut.cs" />
+     <Compile Include="Assets\Scripts\Simulation\Model\CursorForceRayCast.cs" />
      <Compile Include="Assets\Scripts\Simulation\Model\CursorJoint.cs" />
      <Compile Include="Assets\Scripts\Simulation\Model\CursorJointRaycast.cs" />
      <Compile Include="Assets\Scripts\Simulation\Model\DynamicJoint.cs" />
