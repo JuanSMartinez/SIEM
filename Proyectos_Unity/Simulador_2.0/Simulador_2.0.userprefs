@@ -1,10 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Simulation\Model\CursorForceRayCast.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Simulation\Model\CursorJointRaycast.cs">
     <Files>
-      <File FileName="Assets\Scripts\Simulation\Model\CursorJointRaycast.cs" Line="30" Column="3" />
-      <File FileName="Assets\Scripts\Simulation\Model\CursorForceRayCast.cs" Line="46" Column="27" />
-      <File FileName="Assets\Scripts\Simulation\Model\DynamicJoint.cs" Line="24" Column="2" />
+      <File FileName="Assets\Scripts\Haptics\HapticManager.cs" Line="322" Column="38" />
+      <File FileName="Assets\Scripts\Simulation\Model\HapticSpace.cs" Line="18" Column="39" />
+      <File FileName="Assets\Scripts\Simulation\Model\DynamicJoint.cs" Line="59" Column="39" />
+      <File FileName="Assets\Scripts\Simulation\Model\PermanentJoint.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Simulation\Model\Resistance.cs" Line="55" Column="162" />
+      <File FileName="Assets\Scripts\Haptics\ForceManager.cs" Line="41" Column="19" />
+      <File FileName="Assets\Scripts\Simulation\Model\CursorJointRaycast.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

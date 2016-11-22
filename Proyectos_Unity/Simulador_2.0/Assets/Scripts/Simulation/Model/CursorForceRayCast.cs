@@ -3,6 +3,9 @@ using System.Collections;
 
 public class CursorForceRayCast : MonoBehaviour {
 
+	//Type of force, defined as a constant of ForceManager
+	public string forceType = ForceManager.FRICTION;
+
 	//Distance for raycast to hit the object
 	public float distance;
 
@@ -39,7 +42,7 @@ public class CursorForceRayCast : MonoBehaviour {
 
 				if (!forceStarted && HapticManager.GetGrabbed () == null) {
 					//Start the force
-					ForceManager.SetEnvironmentForce (ForceManager.FRICTION, forceIndex, position, direction, gain, magnitude, 0, 0);
+					ForceManager.SetEnvironmentForce (forceType, forceIndex, position, direction, gain, magnitude, 0, 0);
 					forceStarted = true;
 				} else if (forceStarted && HapticManager.GetGrabbed () != null) {
 					ForceManager.StopEnvironmentForce (forceIndex);

@@ -12,6 +12,10 @@ public class HapticSpace : MonoBehaviour {
 	public GameObject hapticCursor;
 	public HapticManager hapticManager;
 
+	/**
+	 * Distance from the cursor from which an object can be grabbed
+	 * */
+	public float grabbingDistance = 0.2f;
 
 	void Start(){
 		if (PluginImport.InitHapticDevice ()) {
@@ -63,7 +67,8 @@ public class HapticSpace : MonoBehaviour {
 			hapticManager.GetProxyValues();
 
 			//Move object with the cursor;
-			hapticManager.manipulateObject ();
+			//hapticManager.manipulateObject ();
+			hapticManager.manipulateObjectRayCast();
 		}
 		catch(Exception){
 			Debug.Log ("Exception in main loop");

@@ -300,6 +300,61 @@ public class HapticManager: MonoBehaviour{
 
 	}
 
+	/**************************************************************/
+	// Manipulate an object with the haptic cursor through RayCasting
+	/*************************************************************/
+	public void manipulateObjectRayCast(){
+		
+		RaycastHit hit;
+		Ray ray = new Ray (hapticSpace.hapticCursor.transform.position, hapticSpace.hapticCursor.transform.forward);
+
+		//If in Manipulation Mode enable the manipulation of the selected object
+
+		if (PluginImport.GetButton2State ()) {
+			if (Physics.Raycast (ray, out hit, hapticSpace.grabbingDistance)) {
+				HapticProperties props = hit.transform.GetComponentInChildren<HapticProperties> ();
+				GameObject obj = props != null ? props.gameObject : null;
+				if (clickCount == 0) {
+					//Set the manipulated object at first click
+					manipObj = obj;
+
+					//Setup Manipulated object Hierarchy as a child of haptic cursor - Only if object is declared as Manipulable object
+					if (manipObj != null && !props.fixedObj) {
+						//Store the Previous parent object that is higher in the hierarchy
+						prevParent = manipObj.transform.parent.parent;
+
+						//Asign New Parent - the tip of the manipulation object device
+						manipObj.transform.parent.parent = hapticSpace.hapticCursor.transform;
+
+					}
+
+				}
+				clickCount++;
+			}
+
+		} else {
+			//Reset Click counter
+			clickCount = 0;
+
+			//Reset Manipulated Object Hierarchy
+			if (manipObj != null && manipObj.transform.parent != null) {
+				manipObj.transform.parent.parent = prevParent;
+
+			}
+
+			//Reset Manipulated Object
+			manipObj = null;
+
+			//Reset prevParent
+			prevParent = null;
+
+		}
+
+		//Only in Manipulation otherwise object are not moving so there is no need to proceed
+		UpdateHapticObjectMatrixTransform();
+			
+	}
+
 	//Returns if there is any object grabbed by the cursor
 	public static GameObject GetGrabbed(){
 		return manipObj;
